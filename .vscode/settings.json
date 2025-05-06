@@ -1,0 +1,10 @@
+{
+   "files.readonlyInclude": {
+      "foundry/**/*": true,
+   },
+   "files.exclude": {
+      "node_modules": true,
+      "foundry": true,
+      "dist": true,
+   }
+}

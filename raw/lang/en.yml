@@ -1,0 +1,54 @@
+TYPES:
+  Actor:
+    # Character
+    character: Character
+
+    #Vehicle
+    vehicle: Vehicle
+
+    # Adversaries
+    minion: Minion
+    rival: Rival
+    nemesis: Nemesis
+
+  Item:
+    # Character Building
+    ability: Special Ability
+    archetype: Archetype
+    career: Career
+    skill: Skill
+    talent: Talent
+
+    # Combat-related
+    armor: Armor
+    injury: Critical Injury/Hit
+    quality: Item Quality
+    vWeapon: Vehicle Weapon
+    weapon: Weapon
+
+    # Inventory
+    consumable: Consumable
+    container: Container
+    gear: Gear
+
+
+GENESYS:
+  stat:
+    characteristic:
+      brawn:
+        label: Brawn
+      agility:
+        label: Agility
+      intellect:
+        label: Intellect
+      cunning:
+        label: Cunning
+      willpower:
+        label: Willpower
+      presence:
+        label: Presence
+      markAsSuper: Mark As Super-Characteristic
+      unmarkAsSuper: Unmark As Super-Characteristic
+
+  skill:
+    generalCategory: General

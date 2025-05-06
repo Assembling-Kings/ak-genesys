@@ -1,0 +1,36 @@
+id: ak-genesys
+title: Genesys
+description: Implementation of the Genesys TTRPG system.
+authors:
+  - name: Assembling Kings
+    url: https://github.com/Assembling-Kings
+
+version: 13.0.0
+compatibility:
+  minimum: 13
+  verified: 13
+  maximum: 13
+
+scripts: []
+esmodules:
+  - genesys.js
+styles:
+  - genesys.css
+socket: true
+
+languages:
+  - lang: en
+    name: English
+    path: lang/en.json
+
+url: https://github.com/Assembling-Kings/fvtt-genesys
+bugs: https://github.com/Assembling-Kings/fvtt-genesys/issues
+changelog: https://github.com/Assembling-Kings/fvtt-genesys/blob/release/CHANGELOG.md
+license: https://github.com/Assembling-Kings/fvtt-genesys/blob/main/LICENSE
+manifest: https://github.com/Assembling-Kings/fvtt-genesys/releases/latest/download/manifest.json
+download: https://github.com/Assembling-Kings/fvtt-genesys/releases/latest/download/genesys.zip
+
+documentTypes:
+  Item:
+    skill:
+      htmlFields: ["source", "description"]
