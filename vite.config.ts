@@ -29,7 +29,13 @@ export default defineConfig({
 
    plugins: [
       constructJsonFromYml(STATIC_DIR, ["raw", "raw/lang"]),
-      pluginVue(),
+      pluginVue({
+         template: {
+            compilerOptions: {
+               isCustomElement: (tag) => ["prose-mirror"].includes(tag),
+            },
+         },
+      }),
    ],
 
    resolve: {

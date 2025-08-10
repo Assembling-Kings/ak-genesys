@@ -1,5 +1,13 @@
 import { type ApplicationClickAction } from "@client/applications/_types.mjs";
-import { type Component, type App as VueApp, type ShallowRef, createApp, shallowRef, h as createElement } from "vue";
+import {
+   type Component,
+   type App as VueApp,
+   type ShallowRef,
+   type VNode,
+   createApp,
+   shallowRef,
+   h as createElement,
+} from "vue";
 
 export type VueContext = {
    renderCounter: number;
@@ -24,12 +32,12 @@ export function VueApplicationMixin<App extends ApplicationV2Constructor = Appli
       /**
        * Holds the Vue App instance that has all the parts as Vue components.
        */
-      #vueApp: VueApp<Element>;
+      #vueApp?: VueApp<Element>;
 
       /**
        * A shallow reference used to provide a pointer of the current instance to the Vue components.
        */
-      #vueContext: ShallowRef<VueContext>;
+      #vueContext?: ShallowRef<VueContext>;
 
       /**
        * An object that will be injected into the created VueApp. This method should be overriden by a derived class to
@@ -81,7 +89,7 @@ export function VueApplicationMixin<App extends ApplicationV2Constructor = Appli
 
             this.#vueApp = createApp({
                render: () => {
-                  const nodes = [];
+                  const nodes: VNode[] = [];
                   for (const [vuePartId, vueComponent] of Object.entries(this.vueParts)) {
                      nodes.push(
                         createElement("div", { "data-application-part": vuePartId }, [createElement(vueComponent)]),

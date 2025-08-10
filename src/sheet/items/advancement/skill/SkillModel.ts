@@ -1,0 +1,44 @@
+import { CommonModel } from "@/sheet/CommonModel";
+import { Characteristic, type Characteristic_ } from "@/values/Characteristic";
+
+export class SkillModel extends CommonModel {
+   declare characteristic: Characteristic_;
+   declare category: string;
+   declare rank: number;
+   declare career: string[];
+
+   static override defineSchema(): foundry.abstract.types.DataSchema {
+      const { StringField, NumberField, ArrayField, DocumentUUIDField } = foundry.data.fields;
+      return {
+         ...super.defineSchema(),
+         characteristic: new StringField({
+            initial: Characteristic.Brawn,
+            choices: Object.values(Characteristic),
+            nullable: false,
+         }),
+         category: new StringField({
+            initial: game.i18n.localize("GENESYS.skill.generalCategory"),
+            blank: false,
+            nullable: false,
+            trim: true,
+         }),
+         rank: new NumberField({
+            initial: 0,
+            integer: true,
+            min: 0,
+            max: 5,
+            nullable: false,
+         }),
+         career: new ArrayField(
+            new DocumentUUIDField({
+               embedded: true,
+               trim: true,
+               nullable: false,
+            }), {
+               initial: [],
+               nullable: false,
+            },
+         ),
+      };
+   }
+}
