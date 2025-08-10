@@ -14,7 +14,7 @@ const activationOptions = Object.values(AbilityActivation).map((activation) => [
 
 <template>
    <header class="ability-header">
-      <img :src="context.document.img"  data-edit="img" data-action="editImage"
+      <img :src="context.document.img" data-edit="img" data-action="editImage"
          :title="context.document.name" :alt="context.document.name" />
       <input type="text" :value="context.document.name" name="name" />
    </header>
