@@ -14,7 +14,7 @@ export default defineConfigWithVueTs(
    ] },
    pluginJs.configs.recommended,
    pluginTs.configs.recommended,
-   pluginVue.configs["flat/recommended"],
+   pluginVue.configs["flat/essential"],
    vueTsConfigs.recommended,
    pluginStylistic.configs.customize({
       indent: 3,

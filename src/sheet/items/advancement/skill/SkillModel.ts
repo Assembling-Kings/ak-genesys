@@ -1,9 +1,11 @@
 import { CommonModel } from "@/sheet/CommonModel";
-import { Characteristic, type Characteristic_ } from "@/values/Characteristic";
+import { Characteristic } from "@/values/Characteristic";
 
 export class SkillModel extends CommonModel {
-   declare characteristic: Characteristic_;
+   declare characteristic: EnumValue<typeof Characteristic>;
    declare category: string;
+
+   // Embedded-relevant properties.
    declare rank: number;
    declare career: string[];
 

@@ -13,56 +13,26 @@ const characteristicOptions = Object.values(Characteristic).map((characteristic)
 </script>
 
 <template>
-  <header class="skill-header">
-    <img
-      :src="context.document.img"
-      data-edit="img"
-      data-action="editImage"
-      :title="context.document.name"
-      :alt="context.document.name"
-    >
-    <input
-      type="text"
-      :value="context.document.name"
-      name="name"
-    >
-  </header>
+   <header class="skill-header">
+      <img :src="context.document.img"  data-edit="img" data-action="editImage"
+         :title="context.document.name" :alt="context.document.name" />
+      <input type="text" :value="context.document.name" name="name" />
+   </header>
 
-  <section class="skill-content">
-    <select
-      :value="system.characteristic"
-      name="system.characteristic"
-    >
-      <option
-        v-for="[label, value] in characteristicOptions"
-        :key="value"
-        :value="value"
-      >
-        {{ label }}
-      </option>
-    </select>
-    <input
-      type="text"
-      :value="system.category"
-      name="system.category"
-    >
+   <section class="skill-content">
+      <select :value="system.characteristic" name="system.characteristic">
+         <option v-for="[label, value] in characteristicOptions" :key="value" :value="value">
+         {{ label }}
+         </option>
+      </select>
+      <input type="text" :value="system.category" name="system.category" />
 
-    <div>{{ system.rank }}</div>
-    <i
-      v-if="system.career.length"
-      class="fa-solid fa-check"
-    />
+      <div>{{ system.rank }}</div>
+      <i v-if="system.career.length" class="fa-solid fa-check" />
 
-    <prose-mirror
-      :value="system.description"
-      name="system.description"
-    />
-    <input
-      type="text"
-      :value="system.source"
-      name="system.source"
-    >
-  </section>
+      <prose-mirror :value="system.description" name="system.description" />
+      <input  type="text" :value="system.source" name="system.source" />
+   </section>
 </template>
 
 <style>

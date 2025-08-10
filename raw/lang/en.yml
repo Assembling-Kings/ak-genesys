@@ -13,7 +13,7 @@ TYPES:
 
   Item:
     # Character Building
-    ability: Special Ability
+    ability: Ability
     archetype: Archetype
     career: Career
     skill: Skill
@@ -52,3 +52,11 @@ GENESYS:
 
   skill:
     generalCategory: General
+
+  ability:
+    activation:
+      passive: Passive
+      action: Active (Action)
+      maneuver: Active (Maneuver)
+      incidental: Active (Incidental)
+      outOfTurn: Active (Incidental, Out of Turn)

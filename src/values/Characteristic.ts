@@ -6,5 +6,3 @@ export const Characteristic = Object.freeze({
    Willpower: "willpower",
    Presence: "presence",
 });
-
-export type Characteristic_ = typeof Characteristic[keyof typeof Characteristic];
