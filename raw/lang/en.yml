@@ -60,3 +60,10 @@ GENESYS:
       maneuver: Active (Maneuver)
       incidental: Active (Incidental)
       outOfTurn: Active (Incidental, Out of Turn)
+  
+  gear:
+    damageState:
+      undamaged: Undamaged
+      minor: Minor
+      moderate: Moderate
+      major: Major

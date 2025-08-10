@@ -22,7 +22,7 @@ const characteristicOptions = Object.values(Characteristic).map((characteristic)
    <section class="skill-content">
       <select :value="system.characteristic" name="system.characteristic">
          <option v-for="[label, value] in characteristicOptions" :key="value" :value="value">
-         {{ label }}
+            {{ label }}
          </option>
       </select>
       <input type="text" :value="system.category" name="system.category" />

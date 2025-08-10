@@ -1,0 +1,42 @@
+import { ItemDamageState } from "@/values/StatusEffect";
+import { CommonModel } from "@/sheet/CommonModel";
+
+export class GearModel extends CommonModel {
+   declare rarity: number;
+   declare price: number;
+   declare encumbrance: number;
+
+   // Embedded-relevant properties.
+   declare condition: EnumValue<typeof ItemDamageState>;
+
+   static override defineSchema(): foundry.abstract.types.DataSchema {
+      const { NumberField, StringField } = foundry.data.fields;
+      return {
+         ...super.defineSchema(),
+         rarity: new NumberField({
+            initial: 0,
+            integer: true,
+            min: 0,
+            max: 10,
+            nullable: false,
+         }),
+         price: new NumberField({
+            initial: 0,
+            integer: true,
+            min: 0,
+            nullable: false,
+         }),
+         encumbrance: new NumberField({
+            initial: 0,
+            integer: true,
+            min: 0,
+            nullable: false,
+         }),
+         condition: new StringField({
+            initial: ItemDamageState.Undamaged,
+            choices: Object.values(ItemDamageState),
+            nullable: false,
+         }),
+      };
+   }
+}
