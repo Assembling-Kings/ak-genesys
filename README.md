@@ -1,0 +1,1 @@
+# Genesys TTRPG system implementation for Foundry VTT
