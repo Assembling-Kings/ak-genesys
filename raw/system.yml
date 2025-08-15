@@ -32,16 +32,23 @@ download: https://github.com/Assembling-Kings/fvtt-genesys/releases/latest/downl
 
 documentTypes:
   Item:
-    skill: &htmlFields
-      htmlFields: &generalFields
+    ability: &htmlFields
+      htmlFields:
         - source
         - description
-    ability: *htmlFields
-    talent: *htmlFields
-    career: *htmlFields
     archetype: *htmlFields
-
+    career: *htmlFields
+    skill: *htmlFields
+    talent: *htmlFields
+    
+    armor: *htmlFields
     injury: *htmlFields
     quality: *htmlFields
+    weapon: *htmlFields
 
+    consumable: *htmlFields
+    container: *htmlFields
     gear: *htmlFields
+
+    v_injury: *htmlFields
+    v_weapon: *htmlFields

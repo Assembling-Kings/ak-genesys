@@ -21,15 +21,18 @@ TYPES:
 
     # Combat-related
     armor: Armor
-    injury: Critical Injury/Hit
+    injury: Critical Injury
     quality: Item Quality
-    vWeapon: Vehicle Weapon
     weapon: Weapon
 
     # Inventory
     consumable: Consumable
     container: Container
     gear: Gear
+
+    # Vehicle Extras
+    v_injury: Critical Hit
+    v_weapon: Vehicle Weapon
 
 
 GENESYS:
@@ -67,3 +70,15 @@ GENESYS:
       minor: Minor
       moderate: Moderate
       major: Major
+
+  encounter:
+    rangeBand:
+      engaged: Engaged
+      short: Short
+      medium: Medium
+      long: Long
+      extreme: Extreme
+      strategic: Strategic
+    qualityActivation:
+      passive: Passive
+      active: Active
