@@ -1,8 +1,9 @@
+import { type DataField } from "@client/data/fields.mjs";
+
 export type ResourceField = {
    max: number;
    value: number;
 };
-
 export function constructResourceField() {
    const { SchemaField, NumberField } = foundry.data.fields;
    return new SchemaField({
@@ -21,4 +22,25 @@ export function constructResourceField() {
          nullable: false,
       }),
    });
+}
+
+export type RefsByNameField<ExtraProps extends object = object> = Record<string, {
+   img: string;
+} & ExtraProps>;
+export function constructRefsByNameField(extraProps?: Record<string, DataField>) {
+   const { TypedObjectField, SchemaField, FilePathField } = foundry.data.fields;
+   return new TypedObjectField(
+      new SchemaField({
+         img: new FilePathField({
+            blank: false,
+            nullable: false,
+            categories: ["IMAGE"],
+         }),
+         ...extraProps,
+      }),
+      {
+         initial: {},
+         nullable: false,
+      },
+   );
 }

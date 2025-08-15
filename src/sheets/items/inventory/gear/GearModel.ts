@@ -1,5 +1,5 @@
 import { ItemDamageState } from "@/values/StatusEffect";
-import { CommonModel } from "@/sheet/CommonModel";
+import { CommonModel } from "@/sheets/CommonModel";
 
 export class GearModel extends CommonModel {
    declare rarity: number;
@@ -35,7 +35,9 @@ export class GearModel extends CommonModel {
          condition: new StringField({
             initial: ItemDamageState.Undamaged,
             choices: Object.values(ItemDamageState),
+            blank: false,
             nullable: false,
+            trim: true,
          }),
       };
    }

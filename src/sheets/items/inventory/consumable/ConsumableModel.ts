@@ -1,4 +1,4 @@
-import { GearModel } from "@/sheet/items/inventory/gear/GearModel";
+import { GearModel } from "@/sheets/items/inventory/gear/GearModel";
 
 export class ConsumableModel extends GearModel {
    // Embedded-relevant properties.

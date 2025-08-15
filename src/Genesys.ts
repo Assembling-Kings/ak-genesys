@@ -10,6 +10,12 @@ import { SkillModel } from "@/sheets/items/advancement/skill/SkillModel";
 import { SkillSheet } from "@/sheets/items/advancement/skill/SkillSheet";
 import { TalentModel } from "@/sheets/items/advancement/talent/TalentModel";
 import { TalentSheet } from "@/sheets/items/advancement/talent/TalentSheet";
+import { ConsumableModel } from "@/sheets/items/inventory/consumable/ConsumableModel";
+import { ConsumableSheet } from "@/sheets/items/inventory/consumable/ConsumableSheet";
+import { ContainerModel } from "@/sheets/items/inventory/container/ContainerModel";
+import { ContainerSheet } from "@/sheets/items/inventory/container/ContainerSheet";
+import { GearModel } from "@/sheets/items/inventory/gear/GearModel";
+import { GearSheet } from "@/sheets/items/inventory/gear/GearSheet";
 
 Hooks.once("init", () => {
    CONFIG.Item.documentClass = GenesysItem;
@@ -19,6 +25,9 @@ Hooks.once("init", () => {
       talent: TalentModel,
       career: CareerModel,
       archetype: ArchetypeModel,
+      gear: GearModel,
+      consumable: ConsumableModel,
+      container: ContainerModel,
    };
 
    const { Items } = foundry.documents.collections;
@@ -30,6 +39,9 @@ Hooks.once("init", () => {
       talent: TalentSheet,
       career: CareerSheet,
       archetype: ArchetypeSheet,
+      gear: GearSheet,
+      consumable: ConsumableSheet,
+      container: ContainerSheet,
    }).forEach(([itemType, itemSheet]) => {
       Items.registerSheet("genesys", itemSheet, {
          types: [itemType],
