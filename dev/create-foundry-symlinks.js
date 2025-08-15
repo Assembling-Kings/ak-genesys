@@ -16,6 +16,11 @@ const readLine = createInterface({
    output: stdout,
 });
 
+console.log(
+   "The script that is about to run will create symbolic links between some directories inside a FoundryVTT "
+   + "installation and your working directory. This allows the developer to have better type support when using "
+   + "FoundryVTT's classes, utilities, etc.\n",
+);
 let foundryRoot = await readLine.question("Provide the full path to the FoundryVTT install folder: ");
 readLine.close();
 console.log("");
@@ -23,7 +28,9 @@ console.log("");
 // Confirm that the provided path exists.
 try {
    // Some of the installs are currently nested.
-   foundryRoot = await access(path.join(foundryRoot, "resources", "app"));
+   const nestedFoundry = path.join(foundryRoot, "resources", "app");
+   await access(nestedFoundry);
+   foundryRoot = nestedFoundry;
 } catch {
    await access(foundryRoot);
 }
@@ -34,19 +41,20 @@ if (!(await lstat(foundryRoot)).isDirectory()) {
 
 try {
    await access(SYMLINK_FOLDER);
-   if (!(await lstat(SYMLINK_FOLDER)).isDirectory()) {
-      throw new Error(
-         "A file named `foundry` already exists inside the working directory. "
-         + "Please remove it in order to create the necessary folder.",
-      );
-   }
 } catch {
    await mkdir(SYMLINK_FOLDER);
 }
 
+if (!(await lstat(SYMLINK_FOLDER)).isDirectory()) {
+   throw new Error(
+      `A file named "${SYMLINK_FOLDER}" already exists inside the working directory. `
+      + "Please remove it in order to create the necessary directory.",
+   );
+}
+
 for (const targetNestedPath of SYMLINK_PAIRS) {
-   const sourcePath = path.join(foundryRoot, ...targetNestedPath.source);
-   const targetPath = path.join(SYMLINK_FOLDER, ...targetNestedPath.target);
+   const sourcePath = path.resolve(foundryRoot, ...targetNestedPath.source);
+   const targetPath = path.resolve(SYMLINK_FOLDER, ...targetNestedPath.target);
 
    let linkStats = null;
    try {
@@ -80,3 +88,5 @@ for (const targetNestedPath of SYMLINK_PAIRS) {
       }
    }
 }
+
+console.log("The script finished successfully!");

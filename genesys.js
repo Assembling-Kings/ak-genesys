@@ -4,5 +4,4 @@
  * bundle with the same name.
  * For more info see: https://foundryvtt.wiki/en/development/guides/vite
  */
-window.global = window;
-import "./src/Genesys.ts";
+import "./src/Genesys.dev.ts";

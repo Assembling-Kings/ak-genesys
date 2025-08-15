@@ -1,12 +1,10 @@
 import pluginJs from "@eslint/js";
 import pluginTs from "typescript-eslint";
 import pluginStylistic from "@stylistic/eslint-plugin";
-import pluginVue from "eslint-plugin-vue";
-import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import globals from "globals";
 
-export default defineConfigWithVueTs(
-   { files: ["**/*.{js,ts,vue}"] },
+export default pluginTs.config(
+   { files: ["**/*.{js,ts}"] },
    { ignores: [
       "node_modules/",
       "dist/",
@@ -14,8 +12,6 @@ export default defineConfigWithVueTs(
    ] },
    pluginJs.configs.recommended,
    pluginTs.configs.recommended,
-   pluginVue.configs["flat/essential"],
-   vueTsConfigs.recommended,
    pluginStylistic.configs.customize({
       indent: 3,
       quotes: "double",
@@ -51,19 +47,15 @@ export default defineConfigWithVueTs(
       },
    },
    {
+      files: ["src/*.{js,ts}"],
       languageOptions: {
          globals: globals.browser,
-         parserOptions: {
-            projectService: {
-               allowDefaultProject: ["vite.config.ts", "eslint.config.ts", "dev/*", "genesys.js"],
-            },
-         },
       },
    },
    {
-      files: ["/*.{js,ts}", "dev/*.{js,ts}"],
+      files: ["vite.config.ts", "eslint.config.ts", "dev/*.{js,ts}"],
       languageOptions: {
-         globals: globals.node,
+         globals: { ...globals.node, ...globals.browser },
       },
    },
 );
