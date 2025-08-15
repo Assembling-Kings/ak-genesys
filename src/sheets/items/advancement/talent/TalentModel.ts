@@ -1,4 +1,4 @@
-import { AbilityModel } from "@/sheet/items/advancement/ability/AbilityModel";
+import { AbilityModel } from "@/sheets/items/advancement/ability/AbilityModel";
 
 export class TalentModel extends AbilityModel {
    declare tier: number;

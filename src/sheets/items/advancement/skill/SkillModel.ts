@@ -1,4 +1,4 @@
-import { CommonModel } from "@/sheet/CommonModel";
+import { CommonModel } from "@/sheets/CommonModel";
 import { Characteristic } from "@/values/Characteristic";
 
 export class SkillModel extends CommonModel {
@@ -16,7 +16,9 @@ export class SkillModel extends CommonModel {
          characteristic: new StringField({
             initial: Characteristic.Brawn,
             choices: Object.values(Characteristic),
+            blank: false,
             nullable: false,
+            trim: true,
          }),
          category: new StringField({
             initial: game.i18n.localize("GENESYS.skill.generalCategory"),
@@ -35,6 +37,7 @@ export class SkillModel extends CommonModel {
             new DocumentUUIDField({
                embedded: true,
                trim: true,
+               blank: false,
                nullable: false,
             }), {
                initial: [],

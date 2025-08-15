@@ -1,4 +1,4 @@
-import { CommonModel } from "@/sheet/CommonModel";
+import { CommonModel } from "@/sheets/CommonModel";
 import { AbilityActivation } from "@/values/Activation";
 import { constructResourceField, type ResourceField } from "@/helpers/model-helpers";
 
@@ -13,7 +13,9 @@ export class AbilityModel extends CommonModel {
          activation: new StringField({
             initial: AbilityActivation.Passive,
             choices: Object.values(AbilityActivation),
+            blank: false,
             nullable: false,
+            trim: true,
          }),
          uses: constructResourceField(),
       };

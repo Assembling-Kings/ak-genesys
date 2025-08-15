@@ -1,22 +1,17 @@
-import { CommonModel } from "@/sheet/CommonModel";
+import { CommonModel } from "@/sheets/CommonModel";
+import { constructRefsByNameField, type RefsByNameField } from "@/helpers/model-helpers";
 
 export class CareerModel extends CommonModel {
-   declare skills: Record<string, { img: string }>;
+   declare skills: RefsByNameField;
 
    // Embedded-relevant properties.
    declare trained: string[];
 
    static override defineSchema(): foundry.abstract.types.DataSchema {
-      const { TypedObjectField, SchemaField, FilePathField, ArrayField, DocumentUUIDField } = foundry.data.fields;
+      const { ArrayField, DocumentUUIDField } = foundry.data.fields;
       return {
          ...super.defineSchema(),
-         skills: new TypedObjectField(new SchemaField({
-            img: new FilePathField({
-               blank: false,
-               nullable: false,
-               categories: ["IMAGE"],
-            }),
-         })),
+         skills: constructRefsByNameField(),
          trained: new ArrayField(new DocumentUUIDField({
             embedded: true,
             trim: true,

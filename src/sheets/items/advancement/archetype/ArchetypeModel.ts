@@ -1,4 +1,4 @@
-import { CommonModel } from "@/sheet/CommonModel";
+import { CommonModel } from "@/sheets/CommonModel";
 import { Characteristic } from "@/values/Characteristic";
 
 export class ArchetypeModel extends CommonModel {

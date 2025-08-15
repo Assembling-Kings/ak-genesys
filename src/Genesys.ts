@@ -1,15 +1,15 @@
 import "./styles/Genesys.css";
-import { GenesysItem } from "@/sheet/items/GenesysItem";
-import { AbilityModel } from "@/sheet/items/advancement/ability/AbilityModel";
-import { AbilitySheet } from "@/sheet/items/advancement/ability/AbilitySheet";
-import { ArchetypeModel } from "@/sheet/items/advancement/archetype/ArchetypeModel";
-import { ArchetypeSheet } from "@/sheet/items/advancement/archetype/ArchetypeSheet";
-import { CareerModel } from "@/sheet/items/advancement/career/CareerModel";
-import { CareerSheet } from "@/sheet/items/advancement/career/CareerSheet";
-import { SkillModel } from "@/sheet/items/advancement/skill/SkillModel";
-import { SkillSheet } from "@/sheet/items/advancement/skill/SkillSheet";
-import { TalentModel } from "@/sheet/items/advancement/talent/TalentModel";
-import { TalentSheet } from "@/sheet/items/advancement/talent/TalentSheet";
+import { GenesysItem } from "@/sheets/items/GenesysItem";
+import { AbilityModel } from "@/sheets/items/advancement/ability/AbilityModel";
+import { AbilitySheet } from "@/sheets/items/advancement/ability/AbilitySheet";
+import { ArchetypeModel } from "@/sheets/items/advancement/archetype/ArchetypeModel";
+import { ArchetypeSheet } from "@/sheets/items/advancement/archetype/ArchetypeSheet";
+import { CareerModel } from "@/sheets/items/advancement/career/CareerModel";
+import { CareerSheet } from "@/sheets/items/advancement/career/CareerSheet";
+import { SkillModel } from "@/sheets/items/advancement/skill/SkillModel";
+import { SkillSheet } from "@/sheets/items/advancement/skill/SkillSheet";
+import { TalentModel } from "@/sheets/items/advancement/talent/TalentModel";
+import { TalentSheet } from "@/sheets/items/advancement/talent/TalentSheet";
 
 Hooks.once("init", () => {
    CONFIG.Item.documentClass = GenesysItem;
@@ -24,29 +24,17 @@ Hooks.once("init", () => {
    const { Items } = foundry.documents.collections;
 
    Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
-   Items.registerSheet("genesys", SkillSheet, {
-      types: ["skill"],
-      makeDefault: true,
-      label: "Genesys Sheet",
-   });
-   Items.registerSheet("genesys", AbilitySheet, {
-      types: ["ability"],
-      makeDefault: true,
-      label: "Genesys Sheet",
-   });
-   Items.registerSheet("genesys", TalentSheet, {
-      types: ["talent"],
-      makeDefault: true,
-      label: "Genesys Sheet",
-   });
-   Items.registerSheet("genesys", CareerSheet, {
-      types: ["career"],
-      makeDefault: true,
-      label: "Genesys Sheet",
-   });
-   Items.registerSheet("genesys", ArchetypeSheet, {
-      types: ["archetype"],
-      makeDefault: true,
-      label: "Genesys Sheet",
+   Object.entries({
+      skill: SkillSheet,
+      ability: AbilitySheet,
+      talent: TalentSheet,
+      career: CareerSheet,
+      archetype: ArchetypeSheet,
+   }).forEach(([itemType, itemSheet]) => {
+      Items.registerSheet("genesys", itemSheet, {
+         types: [itemType],
+         makeDefault: true,
+         label: "Genesys Sheet",
+      });
    });
 });
