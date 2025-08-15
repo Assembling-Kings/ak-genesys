@@ -20,7 +20,6 @@ export function replacePattern(targets: ReplaceTarget[]): Plugin {
       },
       transform(content, filePath) {
          let transformedContent = content;
-         let wasTransformed = false;
          for (const target of targets) {
             const relativePath = path.relative(savedConfig.root, filePath);
             if (!path.matchesGlob(relativePath, target.glob)) { continue; }
@@ -31,10 +30,9 @@ export function replacePattern(targets: ReplaceTarget[]): Plugin {
             transformedContent = transformedContent.replaceAll(
                forcedPattern, (...patternMatch) => target.replace(patternMatch, relativePath),
             );
-            wasTransformed = true;
          }
 
-         if (wasTransformed) {
+         if (transformedContent !== content) {
             return {
                code: transformedContent,
                map: null,

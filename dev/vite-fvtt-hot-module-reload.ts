@@ -4,7 +4,7 @@ import { mkdir, writeFile, copyFile } from "fs/promises";
 import crawler from "fast-glob";
 
 type FileContent = Parameters<typeof writeFile>[1];
-type TransformOutput = [FileContent, string];
+type TransformOutput = [content: FileContent, fileName: string];
 type HmrTarget = {
    fileExt: string;
    inDir: string;

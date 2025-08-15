@@ -10,6 +10,18 @@ import { SkillModel } from "@/sheets/items/advancement/skill/SkillModel";
 import { SkillSheet } from "@/sheets/items/advancement/skill/SkillSheet";
 import { TalentModel } from "@/sheets/items/advancement/talent/TalentModel";
 import { TalentSheet } from "@/sheets/items/advancement/talent/TalentSheet";
+import { ArmorModel } from "@/sheets/items/combat/armor/ArmorModel";
+import { ArmorSheet } from "@/sheets/items/combat/armor/ArmorSheet";
+import { InjuryModel } from "@/sheets/items/combat/injury/InjuryModel";
+import { InjurySheet } from "@/sheets/items/combat/injury/InjurySheet";
+import { QualityModel } from "@/sheets/items/combat/quality/QualityModel";
+import { QualitySheet } from "@/sheets/items/combat/quality/QualitySheet";
+import { vInjuryModel } from "@/sheets/items/combat/v_injury/vInjuryModel";
+import { vInjurySheet } from "@/sheets/items/combat/v_injury/vInjurySheet";
+import { vWeaponModel } from "@/sheets/items/combat/v_weapon/vWeaponModel";
+import { vWeaponSheet } from "@/sheets/items/combat/v_weapon/vWeaponSheet";
+import { WeaponModel } from "@/sheets/items/combat/weapon/WeaponModel";
+import { WeaponSheet } from "@/sheets/items/combat/weapon/WeaponSheet";
 import { ConsumableModel } from "@/sheets/items/inventory/consumable/ConsumableModel";
 import { ConsumableSheet } from "@/sheets/items/inventory/consumable/ConsumableSheet";
 import { ContainerModel } from "@/sheets/items/inventory/container/ContainerModel";
@@ -20,28 +32,45 @@ import { GearSheet } from "@/sheets/items/inventory/gear/GearSheet";
 Hooks.once("init", () => {
    CONFIG.Item.documentClass = GenesysItem;
    CONFIG.Item.dataModels = {
-      skill: SkillModel,
       ability: AbilityModel,
-      talent: TalentModel,
-      career: CareerModel,
       archetype: ArchetypeModel,
-      gear: GearModel,
+      career: CareerModel,
+      skill: SkillModel,
+      talent: TalentModel,
+
+      armor: ArmorModel,
+      injury: InjuryModel,
+      quality: QualityModel,
+      weapon: WeaponModel,
+
       consumable: ConsumableModel,
       container: ContainerModel,
+      gear: GearModel,
+
+      v_injury: vInjuryModel,
+      v_weapon: vWeaponModel,
    };
 
    const { Items } = foundry.documents.collections;
-
    Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
    Object.entries({
-      skill: SkillSheet,
       ability: AbilitySheet,
-      talent: TalentSheet,
-      career: CareerSheet,
       archetype: ArchetypeSheet,
-      gear: GearSheet,
+      career: CareerSheet,
+      skill: SkillSheet,
+      talent: TalentSheet,
+
+      armor: ArmorSheet,
+      injury: InjurySheet,
+      quality: QualitySheet,
+      weapon: WeaponSheet,
+
       consumable: ConsumableSheet,
       container: ContainerSheet,
+      gear: GearSheet,
+
+      v_injury: vInjurySheet,
+      v_weapon: vWeaponSheet,
    }).forEach(([itemType, itemSheet]) => {
       Items.registerSheet("genesys", itemSheet, {
          types: [itemType],

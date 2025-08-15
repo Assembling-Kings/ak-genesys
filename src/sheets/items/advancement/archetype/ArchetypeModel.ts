@@ -24,6 +24,9 @@ export class ArchetypeModel extends CommonModel {
             Object.fromEntries(
                Object.values(Characteristic).map((characteristic) => [characteristic, newCharacteristicField()]),
             ),
+            {
+               nullable: false,
+            },
          ),
          wounds: new NumberField({
             initial: 0,

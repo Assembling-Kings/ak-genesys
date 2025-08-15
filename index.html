@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <!--
-	The Vite dev server requires an application entrypoint which for us is pointing at the wrong path. Therefore, we
+   The Vite dev server requires an application entrypoint which for us is pointing at the wrong path. Therefore, we
    include this file to redirect to the root of the dev server and let the proxy and FoundryVTT take care of the rest.
    Note that this file is not copied during the production build since it's not needed.
    For more info see: https://foundryvtt.wiki/en/development/guides/vite
 -->
 <html>
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<title>FoundryVTT/Vite Redirect Page</title>
+   <title>FoundryVTT/Vite Redirect Page</title>
    <script>
       window.location = "/";
    </script>

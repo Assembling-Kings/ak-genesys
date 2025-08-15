@@ -39,23 +39,22 @@ export default defineConfig({
       emptyFolders(["static"]),
       replacePattern([
          {
-            glob: "src/sheets/items/advancement/skill/SkillSheet.ts",
+            glob: "src/sheets/**/*.ts",
             pattern:
                /get\s+(templates?)\s*\(\s*\)\s*{\s*return\s+\$ak_tplts?\s*\(\s*((["'][\w./]+["']\s*,?\s*)+)\);?\s*}/g,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            replace: (patternMatch: any[], filePath: string) => {
-               const objKey = patternMatch[1] as string;
-               const tpltsList = (patternMatch[2] as string)
+            replace: (patternMatch: string[], filePath: string) => {
+               const objKey = patternMatch[1];
+               const tpltsList = patternMatch[2]
                   .trim().split(",").map((tplt) => tplt.trim())
                   .filter((tplt) => !!tplt).map((tplt) => {
                      const strippedPath = path.join(
                         "systems", SYSTEM_NAME, TEMPLATE_DIR,
-                        path.relative("src", path.dirname(filePath)),
+                        path.relative(SOURCE_DIR, path.dirname(filePath)),
                         tplt.substring(1, tplt.length - 1) + ".hbs",
                      );
                      return crawler.convertPathToPattern(strippedPath);
                   });
-               const wrapperStrings = tpltsList.length > 1 ? ['["', '"]'] : ['"', '"'];
+               const wrapperStrings = objKey.endsWith("s") ? ['["', '"]'] : ['"', '"'];
                return `${objKey}: ${wrapperStrings[0]}${tpltsList.join('",\n"')}${wrapperStrings[1]}`;
             },
          },
