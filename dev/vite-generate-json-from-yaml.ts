@@ -4,11 +4,16 @@ import crawler from "fast-glob";
 import { readFile, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-export function constructJsonFromYml(targets: string[], dstDir: string): Plugin {
+/**
+ * A plugin that converts `.yml` files into `.json` files.
+ * @param targets A list of paths to directories that contain `.yml` files.
+ * @param dstDir The folder were the generated `.json` file will be copied.
+ */
+export function generateJsonFromYml(targets: string[], dstDir: string): Plugin {
    let isRunning = false;
 
    return {
-      name: "vite-plugin-construct-json-from-yaml",
+      name: "vite-generate-json-from-yaml",
       apply: "build",
       enforce: "pre",
       async buildStart() {

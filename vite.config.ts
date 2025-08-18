@@ -1,8 +1,7 @@
 import { defineConfig } from "vite";
 import path from "path";
-import yaml from "js-yaml";
-import crawler from "fast-glob";
-import { constructJsonFromYml } from "./dev/vite-construct-json-from-yaml";
+import { generateJsonFromYml } from "./dev/vite-generate-json-from-yaml";
+import { assembleLangFiles, assembleLangFilesHmr, assembleLangSubFilesHmr } from "./dev/vite-fvtt-assemble-lang-files";
 import { hotModuleReloadFvtt } from "./dev/vite-fvtt-hot-module-reload";
 import { copyFiles } from "./dev/vite-copy-files";
 import { emptyFolders } from "./dev/vite-empty-folders";
@@ -13,7 +12,8 @@ const STATIC_DIR = "static"; // Path to folder that contains files that are copi
 const OUT_DIR = "dist"; // Path to folder were the build output is stored.
 const SOURCE_DIR = "src"; // Path to folder were the system's logic is defined.
 const RAW_DIR = "raw"; // Path to folder with files that need to be transformed before copied.
-const TEMPLATE_DIR = "tplt"; // Name for folder that holds template (.hbs) files. It exists in different places.
+const TEMPLATE_DIR = "tplt"; // Name for folder that holds template (`.hbs`) files. It exists in different places.
+const LANG_DIR = "lang"; // Name for folder that holds translation files. It exists in different places.
 
 const PROXY_HOST = process.env.VITE_PROXY_HOST ?? "localhost";
 const PROXY_PORT = process.env.VITE_PROXY_PORT ?? 30000;
@@ -37,51 +37,70 @@ export default defineConfig({
 
    plugins: [
       emptyFolders(["static"]),
-      replacePattern([
-         {
-            glob: "src/sheets/**/*.ts",
-            pattern:
-               /get\s+(templates?)\s*\(\s*\)\s*{\s*return\s+\$ak_tplts?\s*\(\s*((["'][\w./]+["']\s*,?\s*)+)\);?\s*}/g,
-            replace: (patternMatch: string[], filePath: string) => {
-               const objKey = patternMatch[1];
-               const tpltsList = patternMatch[2]
-                  .trim().split(",").map((tplt) => tplt.trim())
-                  .filter((tplt) => !!tplt).map((tplt) => {
-                     const strippedPath = path.join(
-                        "systems", SYSTEM_NAME, TEMPLATE_DIR,
-                        path.relative(SOURCE_DIR, path.dirname(filePath)),
-                        tplt.substring(1, tplt.length - 1) + ".hbs",
-                     );
-                     return crawler.convertPathToPattern(strippedPath);
-                  });
-               const wrapperStrings = objKey.endsWith("s") ? ['["', '"]'] : ['"', '"'];
-               return `${objKey}: ${wrapperStrings[0]}${tpltsList.join('",\n"')}${wrapperStrings[1]}`;
-            },
+
+      // Replaces getters that call the `$ak_tplt` & `$ak_tplts` helper functions with proper paths to the templates.
+      replacePattern([{
+         glob: "src/sheets/**/*.ts",
+         pattern:
+            /get\s+(templates?)\s*\(\s*\)\s*{\s*return\s+\$ak_tplts?\s*\(\s*((["'][\w./[\]]+["']\s*,?\s*)+)\);?\s*}/g,
+         replace: (patternMatch: string[], filePath: string) => {
+            const objKey = patternMatch[1];
+            const tpltsList = patternMatch[2]
+               .trim().split(",").map((tplt) => tplt.trim())
+               .filter((tplt) => !!tplt).map((tplt) => {
+                  const strippedPath = path.posix.join(
+                     "systems", SYSTEM_NAME, TEMPLATE_DIR,
+                     path.posix.relative(SOURCE_DIR, path.posix.dirname(filePath)),
+                     tplt.substring(1, tplt.length - 1) + ".hbs",
+                  );
+                  return strippedPath;
+               });
+            const wrapperStrings = objKey.endsWith("s") ? ['["', '"]'] : ['"', '"'];
+            return `${objKey}: ${wrapperStrings[0]}${tpltsList.join('",\n"')}${wrapperStrings[1]}`;
          },
-      ]),
-      constructJsonFromYml([RAW_DIR, `${RAW_DIR}/lang`], STATIC_DIR),
-      copyFiles([
+      }]),
+
+      // Generates the `system.json` file and copies it to the static folder.
+      generateJsonFromYml([RAW_DIR], STATIC_DIR),
+
+      // Generates all the translation files by merging all the small pieces and copying them to the static folder.
+      assembleLangFiles(`${RAW_DIR}/${LANG_DIR}`, "src/**/*Typo.yml", "GENESYS", `${STATIC_DIR}/${LANG_DIR}`),
+
+      // Copies all the handlebars files as-is to the static folder.
+      copyFiles([{
+         srcGlob: `${SOURCE_DIR}/**/*.hbs`,
+         dstDir: `${STATIC_DIR}/${TEMPLATE_DIR}`,
+      }]),
+
+      // Adds HMR support for templates (`.hbs` files) and translations (`.yml` files).
+      hotModuleReloadFvtt([
          {
             fileExt: "hbs",
             inDir: SOURCE_DIR,
-            outDir: `${STATIC_DIR}/${TEMPLATE_DIR}`,
-         },
-      ]),
-      hotModuleReloadFvtt(SYSTEM_NAME, [
-         {
-            fileExt: "hbs",
-            inDir: SOURCE_DIR,
-            outDir: STATIC_DIR,
-            modDir: TEMPLATE_DIR,
+            dstDir: `${STATIC_DIR}/${TEMPLATE_DIR}`,
+            buildEventData: (filePath) => ({ path: `systems/${SYSTEM_NAME}/${TEMPLATE_DIR}/${filePath}` }),
          },
          {
+            // Updating the base `.yml` translation files requires building them from scratch.
             fileExt: "yml",
-            inDir: RAW_DIR,
-            outDir: STATIC_DIR,
-            transform: async (content, filePath) => {
-               const contentAsObj = yaml.load(await content(), { filename: filePath });
-               return [JSON.stringify(contentAsObj, null, 3), `${path.basename(filePath, ".yml")}.json`];
-            },
+            inDir: `${RAW_DIR}/${LANG_DIR}`,
+            dstDir: `${STATIC_DIR}/${LANG_DIR}`,
+            transform: assembleLangFilesHmr("GENESYS", "src/**/*Typo.yml", `${STATIC_DIR}/${LANG_DIR}`),
+            buildEventData: (_filePath, transformOutput) => ({
+               paths: transformOutput!.paths.map(
+                  (filePath: string) => `systems/${SYSTEM_NAME}/${path.posix.relative(STATIC_DIR, filePath)}`),
+            }),
+         },
+         {
+            // Updating a fragment `.yml` translation file requires a small update to all the final tanslation files.
+            fileExt: "yml",
+            inDir: SOURCE_DIR,
+            dstDir: `${STATIC_DIR}/${LANG_DIR}`,
+            transform: assembleLangSubFilesHmr("GENESYS", `${STATIC_DIR}/${LANG_DIR}`),
+            buildEventData: (_filePath, transformOutput) => ({
+               paths: transformOutput!.paths.map(
+                  (filePath: string) => `systems/${SYSTEM_NAME}/${path.posix.relative(STATIC_DIR, filePath)}`),
+            }),
          },
       ]),
    ],
@@ -89,7 +108,6 @@ export default defineConfig({
    resolve: {
       alias: {
          "@": path.resolve(__dirname, SOURCE_DIR),
-         "@styles": path.resolve(__dirname, `${SOURCE_DIR}/styles`),
       },
    },
 

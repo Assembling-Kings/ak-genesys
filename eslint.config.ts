@@ -1,28 +1,28 @@
 import pluginJs from "@eslint/js";
 import pluginTs from "typescript-eslint";
 import pluginStylistic from "@stylistic/eslint-plugin";
+import pluginCss from "@eslint/css";
 import globals from "globals";
 
 export default pluginTs.config(
-   { files: ["**/*.{js,ts}"] },
-   { ignores: [
-      "node_modules/",
-      "dist/",
-      "foundry/",
-   ] },
-   pluginJs.configs.recommended,
+   { ignores: ["node_modules/", "dist/", "foundry/", "static/"] },
+   { files: ["**/*.js"], ...pluginJs.configs.recommended },
    pluginTs.configs.recommended,
-   pluginStylistic.configs.customize({
-      indent: 3,
-      quotes: "double",
-      semi: true,
-      arrowParens: true,
-      braceStyle: "1tbs",
-      blockSpacing: true,
-      quoteProps: "as-needed",
-      commaDangle: "only-multiline",
-   }),
    {
+      files: ["**/*.{js,ts}"],
+      ...pluginStylistic.configs.customize({
+         indent: 3,
+         quotes: "double",
+         semi: true,
+         arrowParens: true,
+         braceStyle: "1tbs",
+         blockSpacing: true,
+         quoteProps: "as-needed",
+         commaDangle: "only-multiline",
+      }),
+   },
+   {
+      files: ["**/*.{js,ts}"],
       plugins: { "@stylistic": pluginStylistic },
       rules: {
          "@stylistic/max-len": ["error", {
@@ -38,6 +38,7 @@ export default pluginTs.config(
       },
    },
    {
+      files: ["**/*.{js,ts}"],
       rules: {
          "@typescript-eslint/no-unused-vars": ["error", {
             varsIgnorePattern: "^_",
@@ -57,5 +58,11 @@ export default pluginTs.config(
       languageOptions: {
          globals: { ...globals.node, ...globals.browser },
       },
+   },
+   {
+      files: ["**/*.css"],
+      language: "css/css",
+      plugins: { css: pluginCss },
+      extends: [pluginCss.configs.recommended],
    },
 );

@@ -6,6 +6,7 @@ import { stdin, stdout } from "process";
 const SYMLINK_FOLDER = "static";
 const SYMLINK_PAIRS = [
    { target: ["tplt"], source: ["tplt"] },
+   { target: ["lang"], source: ["lang"] },
 ];
 
 const readLine = createInterface({

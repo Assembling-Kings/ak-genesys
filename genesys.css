@@ -1,5 +1,6 @@
 /**
- * The Vite dev server requires that all the files it's supposed to serve exist, so we create an empty dummy file. Note
- * that this file is not copied during the production build since Vite will make a compiled bundle with the same name.
+ * The Vite dev server requires that all the files it's supposed to serve exist, so we create an empty dummy file.
+ * Notice that this file is not copied during the production build since Vite will make a compiled bundle with the same
+ * name.
  * For more info see: https://foundryvtt.wiki/en/development/guides/vite
  */
