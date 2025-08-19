@@ -1,0 +1,12 @@
+<section class="skill-main">
+   <label class="skill-category">
+      <span>{{localize "GENESYS.sheets.skill.category"}}:</span>
+      {{formInput systemFields.category value=system.category
+         placeholder=(localize "GENESYS.fields.skill.category.initial")}}
+   </label>
+   <div class="skill-description">
+      <prose-mirror name="system.description" value="{{system.description}}" data-action="openEditor" toggled>
+         {{{system.description}}}
+      </prose-mirror>
+   </div>
+</section>

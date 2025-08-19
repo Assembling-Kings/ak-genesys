@@ -1,0 +1,37 @@
+_USE_SUB_KEY: false
+
+en:
+  values:
+    abilityActivation:
+      passive: Passive
+      action: Active (Action)
+      maneuver: Active (Maneuver)
+      incidental: Active (Incidental)
+      outOfTurn: Active (Incidental, Out of Turn)
+    qualityActivation:
+      passive: Passive
+      active: Active
+    characteristic:
+      brawn: Brawn
+      agility: Agility
+      intellect: Intellect
+      cunning: Cunning
+      willpower: Willpower
+      presence: Presence
+    firingArcDirection:
+      fore: Fore
+      aft: Aft
+      port: Port
+      starboard: Starboard
+    rangeBand:
+      engaged: Engaged
+      short: Short
+      medium: Medium
+      long: Long
+      extreme: Extreme
+      strategic: Strategic
+    gearDamageState:
+      undamaged: Undamaged
+      minor: Minor
+      moderate: Moderate
+      major: Major

@@ -38,47 +38,5 @@ TYPES:
 GENESYS:
   stat:
     characteristic:
-      brawn:
-        label: Brawn
-      agility:
-        label: Agility
-      intellect:
-        label: Intellect
-      cunning:
-        label: Cunning
-      willpower:
-        label: Willpower
-      presence:
-        label: Presence
       markAsSuper: Mark As Super-Characteristic
       unmarkAsSuper: Unmark As Super-Characteristic
-
-  skill:
-    generalCategory: General
-
-  ability:
-    activation:
-      passive: Passive
-      action: Active (Action)
-      maneuver: Active (Maneuver)
-      incidental: Active (Incidental)
-      outOfTurn: Active (Incidental, Out of Turn)
-  
-  gear:
-    damageState:
-      undamaged: Undamaged
-      minor: Minor
-      moderate: Moderate
-      major: Major
-
-  encounter:
-    rangeBand:
-      engaged: Engaged
-      short: Short
-      medium: Medium
-      long: Long
-      extreme: Extreme
-      strategic: Strategic
-    qualityActivation:
-      passive: Passive
-      active: Active

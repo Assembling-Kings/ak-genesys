@@ -43,7 +43,7 @@ export default defineConfig({
          glob: "src/sheets/**/*.ts",
          pattern:
             /get\s+(templates?)\s*\(\s*\)\s*{\s*return\s+\$ak_tplts?\s*\(\s*((["'][\w./[\]]+["']\s*,?\s*)+)\);?\s*}/g,
-         replace: (patternMatch: string[], filePath: string) => {
+         replace(patternMatch: string[], filePath: string) {
             const objKey = patternMatch[1];
             const tpltsList = patternMatch[2]
                .trim().split(",").map((tplt) => tplt.trim())
@@ -73,36 +73,32 @@ export default defineConfig({
       }]),
 
       // Adds HMR support for templates (`.hbs` files) and translations (`.yml` files).
-      hotModuleReloadFvtt([
-         {
-            fileExt: "hbs",
-            inDir: SOURCE_DIR,
-            dstDir: `${STATIC_DIR}/${TEMPLATE_DIR}`,
-            buildEventData: (filePath) => ({ path: `systems/${SYSTEM_NAME}/${TEMPLATE_DIR}/${filePath}` }),
-         },
-         {
-            // Updating the base `.yml` translation files requires building them from scratch.
-            fileExt: "yml",
-            inDir: `${RAW_DIR}/${LANG_DIR}`,
-            dstDir: `${STATIC_DIR}/${LANG_DIR}`,
-            transform: assembleLangFilesHmr("GENESYS", "src/**/*Typo.yml", `${STATIC_DIR}/${LANG_DIR}`),
-            buildEventData: (_filePath, transformOutput) => ({
-               paths: transformOutput!.paths.map(
-                  (filePath: string) => `systems/${SYSTEM_NAME}/${path.posix.relative(STATIC_DIR, filePath)}`),
-            }),
-         },
-         {
-            // Updating a fragment `.yml` translation file requires a small update to all the final tanslation files.
-            fileExt: "yml",
-            inDir: SOURCE_DIR,
-            dstDir: `${STATIC_DIR}/${LANG_DIR}`,
-            transform: assembleLangSubFilesHmr("GENESYS", `${STATIC_DIR}/${LANG_DIR}`),
-            buildEventData: (_filePath, transformOutput) => ({
-               paths: transformOutput!.paths.map(
-                  (filePath: string) => `systems/${SYSTEM_NAME}/${path.posix.relative(STATIC_DIR, filePath)}`),
-            }),
-         },
-      ]),
+      hotModuleReloadFvtt([{
+         fileExt: "hbs",
+         inDir: SOURCE_DIR,
+         dstDir: `${STATIC_DIR}/${TEMPLATE_DIR}`,
+         buildEventData: (filePath) => ({ path: `systems/${SYSTEM_NAME}/${TEMPLATE_DIR}/${filePath}` }),
+      }, {
+         // Updating the base `.yml` translation files requires building them from scratch.
+         fileExt: "yml",
+         inDir: `${RAW_DIR}/${LANG_DIR}`,
+         dstDir: `${STATIC_DIR}/${LANG_DIR}`,
+         transform: assembleLangFilesHmr("GENESYS", "src/**/*Typo.yml", `${STATIC_DIR}/${LANG_DIR}`),
+         buildEventData: (_filePath, transformOutput) => ({
+            paths: transformOutput!.paths.map(
+               (filePath: string) => `systems/${SYSTEM_NAME}/${path.posix.relative(STATIC_DIR, filePath)}`),
+         }),
+      }, {
+         // Updating a fragment `.yml` translation file requires a small update to all the final tanslation files.
+         fileExt: "yml",
+         inDir: SOURCE_DIR,
+         dstDir: `${STATIC_DIR}/${LANG_DIR}`,
+         transform: assembleLangSubFilesHmr("GENESYS", `${STATIC_DIR}/${LANG_DIR}`),
+         buildEventData: (_filePath, transformOutput) => ({
+            paths: transformOutput!.paths.map(
+               (filePath: string) => `systems/${SYSTEM_NAME}/${path.posix.relative(STATIC_DIR, filePath)}`),
+         }),
+      }]),
    ],
 
    resolve: {

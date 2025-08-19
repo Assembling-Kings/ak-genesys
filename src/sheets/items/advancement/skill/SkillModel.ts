@@ -21,7 +21,7 @@ export class SkillModel extends CommonModel {
             trim: true,
          }),
          category: new StringField({
-            initial: game.i18n.localize("GENESYS.skill.generalCategory"),
+            initial: game.i18n.localize("GENESYS.fields.skill.category.initial"),
             blank: false,
             nullable: false,
             trim: true,

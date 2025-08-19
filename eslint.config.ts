@@ -5,6 +5,10 @@ import pluginCss from "@eslint/css";
 import globals from "globals";
 
 export default pluginTs.config(
+   { linterOptions: {
+      reportUnusedInlineConfigs: "error",
+      reportUnusedDisableDirectives: "error",
+   } },
    { ignores: ["node_modules/", "dist/", "foundry/", "static/"] },
    { files: ["**/*.js"], ...pluginJs.configs.recommended },
    pluginTs.configs.recommended,
@@ -64,5 +68,9 @@ export default pluginTs.config(
       language: "css/css",
       plugins: { css: pluginCss },
       extends: [pluginCss.configs.recommended],
+      rules: {
+         "css/use-baseline": ["error", { available: "newly" }],
+         "css/no-invalid-properties": ["error", { allowUnknownVariables: true }],
+      },
    },
 );

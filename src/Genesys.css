@@ -1,0 +1,61 @@
+/* eslint "css/use-layers": ["error", { requireImportLayers: true }] */
+@layer system.variables, system.reset, system.base, system.main;
+@import url("apps/GenesysAppStyle.css") layer(system.main);
+@import url("sheets/CommonStyle.css") layer(system.main);
+@import url("sheets/items/advancement/skill/SkillStyle.css") layer(system.main);
+
+@layer system.variables {
+   :root {
+      --genesys-background-color: #f1ede8;
+      --genesys-dark-red: #90231e;
+      --genesys-blue: #2b4b73;
+      --genesys-dark-blue: #384455;
+      --genesys-orange: #efaf61;
+   }
+}
+
+@layer system.reset {
+   .genesys {
+      input, select {
+         border: none;
+         background: none;
+         border-radius: 0;
+         padding: 0;
+         margin: 0;
+
+         &:focus {
+            border: none;
+            outline: none;
+            box-shadow: none;
+         }
+      }
+   }
+}
+
+@layer system.base {
+   .genesys {
+      input, select {
+         &:focus {
+            outline: 2px solid var(--genesys-dark-blue);
+         }
+
+         &:hover {
+            outline: 2px solid var(--genesys-dark-blue);
+         }
+      }
+
+      prose-mirror {
+         min-width: 520px;
+         min-height: 210px;
+         height: 100%;
+
+         button.toggle {
+            display: none;
+         }
+
+         &:hover {
+            outline: 2px solid var(--genesys-dark-blue);
+         }
+      }
+   }
+}

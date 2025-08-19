@@ -1,4 +1,4 @@
-import "./styles/Genesys.css";
+import "@/Genesys.css";
 import { GenesysItem } from "@/sheets/items/GenesysItem";
 import { AbilityModel } from "@/sheets/items/advancement/ability/AbilityModel";
 import { AbilitySheet } from "@/sheets/items/advancement/ability/AbilitySheet";
@@ -50,6 +50,9 @@ Hooks.once("init", () => {
       v_injury: vInjuryModel,
       v_weapon: vWeaponModel,
    };
+
+   //// Also add a way to "remember" the last one picked.
+   // CONFIG.Item.defaultType = "myType";
 
    const { Items } = foundry.documents.collections;
    Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);

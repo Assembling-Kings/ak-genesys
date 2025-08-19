@@ -1,4 +1,4 @@
-export const ItemDamageState = Object.freeze({
+export const GearDamageState = Object.freeze({
    Undamaged: "undamaged",
    Minor: "minor",
    Moderate: "moderate",

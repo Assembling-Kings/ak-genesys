@@ -1,0 +1,50 @@
+.genesys.sheet {
+   &.application.item-app {
+      min-width: 536px;
+      min-height: fit-content;
+   }
+
+   .skill-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      select {
+         --input-background-color: transparent;
+         --input-text-color: var(--genesys-blue);
+
+         margin: 8px 8px 8px 0;
+         padding-left: 8px;
+         width: auto;
+         font-family: 'Modesto Condensed', sans-serif;
+      }
+   }
+
+   .skill-main {
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      gap: 8px;
+      height: 100%;
+
+      label.skill-category {
+         display: flex;
+         flex-direction: row;
+         gap: 8px;
+         align-items: baseline;
+
+         span {
+            font-weight: 500;
+            font-size: 18px;
+         }
+
+         input {
+            --input-text-color: black;
+         }
+      }
+
+      .skill-description {
+         height: 100%;
+      }
+   }
+}

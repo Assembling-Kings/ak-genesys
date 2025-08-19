@@ -1,0 +1,10 @@
+<section class="skill-header">
+   {{>"systems/ak-genesys/tplt/sheets/CommonView[header].hbs"}}
+   <select name="system.characteristic">
+      {{#each systemFields.characteristic.choices}}
+         <option value="{{this}}" {{#if (eq this @root.system.characteristic)}}selected{{/if}}>
+            {{localize (concat "GENESYS.values.characteristic." this)}}
+         </option>
+      {{/each}}
+   </select>
+</section>

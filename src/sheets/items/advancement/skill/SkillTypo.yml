@@ -1,0 +1,6 @@
+en:
+  fields:
+    category:
+      initial: General
+  sheets:
+    category: Category

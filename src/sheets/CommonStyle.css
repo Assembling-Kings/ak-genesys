@@ -1,0 +1,61 @@
+.genesys.sheet {
+   .sheet-header {
+      display: flex;
+      padding: 8px;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+
+      .entity-img {
+         height: 40px;
+         border: 1px solid var(--genesys-orange);
+         background-color: rgba(239, 175, 97, 0.5);
+         border-radius: 8px;
+         cursor: pointer;
+      }
+
+      input {
+         width: 100%;
+         font-family: 'Modesto Condensed', sans-serif;
+         font-size: 32px;
+         color: var(--genesys-blue);
+         border-bottom: 2px solid var(--genesys-dark-blue);
+
+         &:focus {
+            border-bottom: 2px solid transparent;
+            font-family: 'Modesto Condensed', sans-serif;
+         }
+
+         &:hover {
+            border-bottom: 2px solid transparent;
+         }
+      }
+   }
+
+   .sheet-source {
+      margin-right: 8px;
+      margin-left: 8px;
+      margin-top: auto;
+      margin-bottom: 3px;
+
+      input {
+         width: 100%;
+         font-family: 'Roboto Serif', serif;
+         font-size: 13px;
+         font-style: italic;
+         text-align: right;
+         color: black;
+         padding: 0 22px;
+         border-top: 1px dashed black;
+         text-overflow: ellipsis;
+
+         &:focus {
+            border-top: 1px solid transparent;
+         }
+
+         &:hover {
+            border-top: 1px solid transparent;
+         }
+      }
+   }
+}

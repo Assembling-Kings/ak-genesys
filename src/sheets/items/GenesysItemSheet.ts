@@ -1,10 +1,10 @@
-import { GenesysApplicationMixin } from "@/apps/GenesysApplicationMixin";
+import { type AppConfiguration, GenesysAppMixin } from "@/apps/GenesysAppMixin";
 import { type GenesysItem } from "@/sheets/items/GenesysItem";
 
 export class GenesysItemSheet<
    Model extends foundry.abstract.TypeDataModel = foundry.abstract.TypeDataModel,
-> extends GenesysApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
-   static DEFAULT_OPTIONS = {
+> extends GenesysAppMixin(foundry.applications.sheets.ItemSheetV2) {
+   static DEFAULT_OPTIONS: AppConfiguration = {
       classes: ["item-app"],
       form: {
          submitOnChange: true,
