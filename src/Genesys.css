@@ -34,12 +34,18 @@
 
 @layer system.base {
    .genesys {
-      input, select {
-         &:focus {
-            outline: 2px solid var(--genesys-dark-blue);
-         }
+      img.edit-image {
+         cursor: pointer;
 
          &:hover {
+            outline: 2px solid var(--genesys-dark-blue);
+         }
+      }
+
+      input, select {
+         --input-text-color: black;
+         
+         &:focus, &:hover {
             outline: 2px solid var(--genesys-dark-blue);
          }
       }
@@ -53,8 +59,14 @@
             display: none;
          }
 
-         &:hover {
-            outline: 2px solid var(--genesys-dark-blue);
+         &.edit-content {
+            &.inactive .editor-content {
+               cursor: pointer;
+            }
+
+            &.active, &:hover {
+               outline: 2px solid var(--genesys-dark-blue);
+            }
          }
       }
    }

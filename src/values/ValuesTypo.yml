@@ -12,12 +12,24 @@ en:
       passive: Passive
       active: Active
     characteristic:
-      brawn: Brawn
-      agility: Agility
-      intellect: Intellect
-      cunning: Cunning
-      willpower: Willpower
-      presence: Presence
+      brawn:
+        label: Brawn
+        abbreviation: Br
+      agility:
+        label: Agility
+        abbreviation: Ag
+      intellect:
+        label: Intellect
+        abbreviation: Int
+      cunning:
+        label: Cunning
+        abbreviation: Cun
+      willpower:
+        label: Willpower
+        abbreviation: Will
+      presence:
+        label: Presence
+        abbreviation: Pr
     firingArcDirection:
       fore: Fore
       aft: Aft

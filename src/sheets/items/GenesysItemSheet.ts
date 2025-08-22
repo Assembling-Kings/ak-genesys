@@ -1,14 +1,16 @@
-import { type AppConfiguration, GenesysAppMixin } from "@/apps/GenesysAppMixin";
+import { type AppConfiguration } from "@/apps/GenesysAppMixin";
+import { GenesysSheetMixin } from "@/sheets/GenesysSheetMixin";
 import { type GenesysItem } from "@/sheets/items/GenesysItem";
 
+/**
+ * A system specific base class for all documents of "Item" type. In here we add basic functionality that is shared by
+ * all "Item" sheets.
+ */
 export class GenesysItemSheet<
    Model extends foundry.abstract.TypeDataModel = foundry.abstract.TypeDataModel,
-> extends GenesysAppMixin(foundry.applications.sheets.ItemSheetV2) {
+> extends GenesysSheetMixin(foundry.applications.sheets.ItemSheetV2) {
    static DEFAULT_OPTIONS: AppConfiguration = {
       classes: ["item-app"],
-      form: {
-         submitOnChange: true,
-      },
    };
 
    declare document: GenesysItem<Model>;

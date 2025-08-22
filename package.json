@@ -20,6 +20,7 @@
       "@types/js-yaml": "^4.0.9",
       "@types/node": "^22.15.3",
       "eslint": "^9.25.1",
+      "eslint-plugin-yml": "^1.18.0",
       "fast-glob": "^3.3.3",
       "globals": "^16.0.0",
       "jiti": "^2.4.2",

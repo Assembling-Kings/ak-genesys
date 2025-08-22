@@ -11,50 +11,58 @@
          border: 1px solid var(--genesys-orange);
          background-color: rgba(239, 175, 97, 0.5);
          border-radius: 8px;
-         cursor: pointer;
       }
 
-      input {
+      .document-name {
          width: 100%;
          font-family: 'Modesto Condensed', sans-serif;
          font-size: 32px;
          color: var(--genesys-blue);
          border-bottom: 2px solid var(--genesys-dark-blue);
+         
 
-         &:focus {
-            border-bottom: 2px solid transparent;
-            font-family: 'Modesto Condensed', sans-serif;
-         }
+         input {
+            width: 100%;
+            --input-text-color: var(--genesys-dark-blue);
 
-         &:hover {
-            border-bottom: 2px solid transparent;
+            &:focus {
+               font-family: 'Modesto Condensed', sans-serif;
+            }
          }
       }
    }
 
    .sheet-source {
-      margin-right: 8px;
-      margin-left: 8px;
-      margin-top: auto;
-      margin-bottom: 3px;
+      margin: auto 8px 3px;
+      padding: 0 15px;
+      border-top: 1px dashed black;
+      font-family: 'Roboto Serif', serif;
+      font-size: 13px;
+      font-style: italic;
+      color: black;
 
-      input {
-         width: 100%;
-         font-family: 'Roboto Serif', serif;
-         font-size: 13px;
-         font-style: italic;
-         text-align: right;
-         color: black;
-         padding: 0 22px;
-         border-top: 1px dashed black;
-         text-overflow: ellipsis;
+      &:has(> input) {
+         height: 36px;
+         line-height: 36px;
+         padding: 0 10px;
 
-         &:focus {
-            border-top: 1px solid transparent;
+         input {
+            width: 100%;
+            text-overflow: ellipsis;
+            text-align: right;
+            padding: 0 5px;
          }
+      }
 
-         &:hover {
-            border-top: 1px solid transparent;
+      &:has(> div) {
+         height: 26px;
+         line-height: 26px;
+
+         & > div {
+            white-space: preserve-spaces;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: right;
          }
       }
    }

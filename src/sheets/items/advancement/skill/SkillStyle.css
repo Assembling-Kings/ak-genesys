@@ -1,7 +1,7 @@
 .genesys.sheet {
-   &.application.item-app {
+   &.application:not(&.minimizing, &.maximizing, &.minimized) {
       min-width: 536px;
-      min-height: fit-content;
+      min-height: 400px;
    }
 
    .skill-header {
@@ -10,13 +10,19 @@
       align-items: center;
 
       select {
-         --input-background-color: transparent;
          --input-text-color: var(--genesys-blue);
+         border: 1px solid black;
+         border-radius: 4px;
 
          margin: 8px 8px 8px 0;
          padding-left: 8px;
          width: auto;
          font-family: 'Modesto Condensed', sans-serif;
+
+         &:focus, &:hover {
+            border: 1px solid transparent;
+            border-radius: 0;
+         }
       }
    }
 
@@ -26,14 +32,17 @@
       padding: 8px;
       gap: 8px;
       height: 100%;
+      flex-shrink: 1;
 
       label.skill-category {
          display: flex;
          flex-direction: row;
          gap: 8px;
          align-items: baseline;
+         height: 30px;
+         line-height: 30px;
 
-         span {
+         .caption {
             font-weight: 500;
             font-size: 18px;
          }
@@ -45,6 +54,7 @@
 
       .skill-description {
          height: 100%;
+         flex-grow: 1;
       }
    }
 }

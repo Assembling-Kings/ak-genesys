@@ -1,5 +1,12 @@
 <header class="sheet-header">
-   <img src="{{document.img}}" alt="{{document.name}}" title="{{document.name}}"
-      data-action="editImage" data-edit="img" class="entity-img" />
-   {{formInput fields.name value=document.name placeholder=(localize "Name")}}
+   <img src="{{document.img}}" alt="{{document.name}}" title="{{document.name}}" data-edit="img"
+      data-action="{{ifThen mode.edit "editImage" "showImage"}}" data-doc-uuid="{{document.uuid}}"
+      class="entity-img {{#if mode.edit}}edit-image{{/if}}" />
+   <div class="document-name">
+      {{#if mode.edit}}
+         <input type="text" name="name" value="{{document.name}}" placeholder="{{localize "Name"}}" />
+      {{else}}
+         {{ifThen displayName displayName document.name}}
+      {{/if}}
+   </div>
 </header>

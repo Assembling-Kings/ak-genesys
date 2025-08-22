@@ -2,6 +2,7 @@ import pluginJs from "@eslint/js";
 import pluginTs from "typescript-eslint";
 import pluginStylistic from "@stylistic/eslint-plugin";
 import pluginCss from "@eslint/css";
+import pluginYml from "eslint-plugin-yml";
 import globals from "globals";
 
 export default pluginTs.config(
@@ -10,7 +11,7 @@ export default pluginTs.config(
       reportUnusedDisableDirectives: "error",
    } },
    { ignores: ["node_modules/", "dist/", "foundry/", "static/"] },
-   { files: ["**/*.js"], ...pluginJs.configs.recommended },
+   { files: ["**/*.{js,ts}"], ...pluginJs.configs.recommended },
    pluginTs.configs.recommended,
    {
       files: ["**/*.{js,ts}"],
@@ -45,10 +46,13 @@ export default pluginTs.config(
       files: ["**/*.{js,ts}"],
       rules: {
          "@typescript-eslint/no-unused-vars": ["error", {
+            args: "all",
             varsIgnorePattern: "^_",
             argsIgnorePattern: "^_",
          }],
          "@typescript-eslint/consistent-type-imports": ["error", { fixStyle: "inline-type-imports" }],
+         "default-case": ["error"],
+         "default-case-last": ["error"],
       },
    },
    {
@@ -73,4 +77,5 @@ export default pluginTs.config(
          "css/no-invalid-properties": ["error", { allowUnknownVariables: true }],
       },
    },
+   ...pluginYml.configs["flat/recommended"],
 );

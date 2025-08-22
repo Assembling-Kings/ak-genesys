@@ -1,13 +1,33 @@
+import { type AppConfiguration } from "@/apps/GenesysAppMixin";
 import { GenesysItemSheet } from "@/sheets/items/GenesysItemSheet";
 import { type SkillModel } from "@/sheets/items/advancement/skill/SkillModel";
+import { type ApplicationRenderContext } from "@client/applications/_types.mjs";
+import { type HandlebarsRenderOptions } from "@client/applications/api/handlebars-application.mjs";
 
 export class SkillSheet extends GenesysItemSheet<SkillModel> {
-   static DEFAULT_OPTIONS = {
+   static DEFAULT_OPTIONS: AppConfiguration = {
       position: {
          width: 536,
-         height: "auto",
+         height: 400,
       },
-   } as const;
+   };
+
+   protected override async _preparePartContext(
+      partId: string, context: ApplicationRenderContext, options: HandlebarsRenderOptions,
+   ) {
+      const theContext = await super._preparePartContext(partId, context, options);
+      switch (partId) {
+         case "header": {
+            const charLabel = game.i18n.localize(
+               `GENESYS.values.characteristic.${this.document.system.characteristic}.label`);
+            theContext.displayName = `${this.document.name} (${charLabel})`;
+            return theContext;
+         }
+         case "main": return await this.document.system.prepareContextForFields(theContext, ["description"]);
+         case "source": return await this.document.system.prepareContextForFields(theContext, ["source"]);
+         default: return theContext;
+      }
+   }
 
    static PARTS = {
       header: {

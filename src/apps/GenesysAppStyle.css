@@ -1,8 +1,11 @@
-.application.genesys.sheet {
+.application.genesys {
    --color-text-primary: black;
 
-   &.minimizing, &.maximizing {
+   /* Some applications have minimums set so this ensures that they can be minimized. */
+   &.minimizing, &.maximizing, &.minimized {
       background-color: var(--genesys-background-color);
+      min-width: 0;
+      min-height: 0;
    }
 
    .window-header {
@@ -18,6 +21,7 @@
       }
    }
 
+   /* Sets the background pattern. */
    .window-content {
       padding: 0;
       background-color: var(--genesys-background-color);

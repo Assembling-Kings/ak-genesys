@@ -1,12 +1,23 @@
 <section class="skill-main">
    <label class="skill-category">
-      <span>{{localize "GENESYS.sheets.skill.category"}}:</span>
-      {{formInput systemFields.category value=system.category
-         placeholder=(localize "GENESYS.fields.skill.category.initial")}}
+      <span class="caption">{{localize "GENESYS.sheets.skill.category"}}:</span>
+      {{#if mode.edit}}
+         <input type="text" name="system.category" value="{{system.category}}"
+            placeholder="{{localize "GENESYS.fields.skill.category.initial"}}" />
+      {{else}}
+         <span>{{system.category}}</span>
+      {{/if}}
    </label>
    <div class="skill-description">
-      <prose-mirror name="system.description" value="{{system.description}}" data-action="openEditor" toggled>
-         {{{system.description}}}
+      <prose-mirror
+         name="system.description" value="{{system.description}}"
+         toggled
+         {{#if mode.edit}}
+            data-action="openEditor"
+            class="edit-content"
+         {{/if}}
+      >
+         {{{enrDescription}}}
       </prose-mirror>
    </div>
 </section>
