@@ -66,10 +66,14 @@ export default defineConfig({
       // Generates all the translation files by merging all the small pieces and copying them to the static folder.
       assembleLangFiles(`${RAW_DIR}/${LANG_DIR}`, "src/**/*Typo.yml", "GENESYS", `${STATIC_DIR}/${LANG_DIR}`),
 
-      // Copies all the handlebars files as-is to the static folder.
       copyFiles([{
+         // Copies all the handlebars files as-is to the static folder.
          srcGlob: `${SOURCE_DIR}/**/*.hbs`,
          dstDir: `${STATIC_DIR}/${TEMPLATE_DIR}`,
+      }, {
+         // Copies all the fonts to the static folder.
+         srcGlob: `${RAW_DIR}/font/*`,
+         dstDir: `${STATIC_DIR}`,
       }]),
 
       // Adds HMR support for templates (`.hbs` files) and translations (`.yml` files).

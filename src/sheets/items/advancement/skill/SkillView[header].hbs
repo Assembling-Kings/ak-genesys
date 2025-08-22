@@ -8,5 +8,12 @@
             </option>
          {{/each}}
       </select>
+   {{else}}
+      {{!-- Only make this block visible if it's embebbed --}}
+      <div class="skill-rank">
+         {{!-- Only make the next line visible if it's a career skill --}}
+         <i class="fa-solid fa-certificate"></i>
+         <div>{{system.rank}}</div>
+      </div>
    {{/if}}
 </section>

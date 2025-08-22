@@ -11,17 +11,40 @@
 
       select {
          --input-text-color: var(--genesys-blue);
-         border: 1px solid black;
-         border-radius: 4px;
-
+         width: auto;
          margin: 8px 8px 8px 0;
          padding-left: 8px;
-         width: auto;
+         border: 1px solid black;
+         border-radius: 4px;
          font-family: 'Modesto Condensed', sans-serif;
 
          &:focus, &:hover {
             border: 1px solid transparent;
             border-radius: 0;
+         }
+      }
+
+      .skill-rank {
+         position: relative;
+         width: 56px;
+         height: fit-content;
+         flex-shrink: 0;
+         z-index: 0;
+
+         i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--genesys-dark-red);
+            font-size: 52px;
+            z-index: -1;
+         }
+         div {
+            font-size: 42px;
+            color: var(--genesys-background-color);
+            text-align: center;
+            z-index: 0;
          }
       }
    }
@@ -38,11 +61,12 @@
          display: flex;
          flex-direction: row;
          gap: 8px;
-         align-items: baseline;
+         align-items: center;
          height: 30px;
          line-height: 30px;
 
          .caption {
+            font-family: 'Bebas Neue', sans-serif;
             font-weight: 500;
             font-size: 18px;
          }

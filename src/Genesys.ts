@@ -81,4 +81,23 @@ Hooks.once("init", () => {
          label: "Genesys Sheet",
       });
    });
+
+   Object.entries({
+      ["Bebas Neue"]: [["BebasNeue-Regular.ttf"]],
+      ["Genesys Glyphs"]: [["GenesysGlyphsAndDice.woff2"]],
+      ["Roboto Condensed"]: [
+         ["RobotoCondensed-VariableFont_wght.ttf", "normal", "100 900"],
+         ["RobotoCondensed-Italic-VariableFont_wght.ttf", "italic", "100 900"]],
+      ["Roboto Serif"]: [
+         ["RobotoSerif-VariableFont_GRAD,opsz,wdth,wght.ttf", "normal", "100 900"],
+         ["RobotoSerif-Italic-VariableFont_GRAD,opsz,wdth,wght.ttf", "italic", "100 900"]],
+      ["Roboto Slab"]: [["RobotoSlab-VariableFont_wght.ttf", "normal", "100 900"]],
+   }).forEach(([fontName, fonts]) => {
+      CONFIG.fontDefinitions[fontName] = {
+         editor: true,
+         fonts: fonts.map(([fontFile, style = "normal", weight = "400"]) => ({
+            urls: [`systems/ak-genesys/font/${fontFile}`], style, weight,
+         })),
+      };
+   });
 });
