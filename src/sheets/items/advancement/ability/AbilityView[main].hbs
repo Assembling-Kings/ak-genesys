@@ -1,0 +1,45 @@
+<section class="ability-main">
+   <label class="ability-activation gap-for-input">
+      <span class="caption">{{localize "GENESYS.sheets.ability.activation"}}:</span>
+      {{#if mode.edit}}
+         <select name="system.activation">
+            {{#each systemFields.activation.choices}}
+               <option value="{{this}}" {{#if (eq this @root.system.activation)}}selected{{/if}}>
+                  {{localize (concat "GENESYS.values.abilityActivation." this)}}
+               </option>
+            {{/each}}
+         </select>
+      {{else}}
+         <span>{{localize (concat "GENESYS.values.abilityActivation." system.activation)}}</span>
+      {{/if}}
+   </label>
+   {{#if mode.edit}}
+      <label class="ability-uses-value gap-for-input">
+         <span class="caption">{{localize "GENESYS.sheets.ability.uses"}}:</span>
+         <input type="number" name="system.uses.value" value="{{system.uses.value}}" max="{{system.uses.max}}" />
+      </label>
+      <label class="ability-uses-max gap-for-input">
+         <span class="caption">{{localize "GENESYS.sheets.ability.usesOf"}}</span>
+         <input type="number" name="system.uses.max" value="{{system.uses.max}}" />
+      </label>
+   {{else}}
+      {{#if usesGraph}}
+         <div class="ability-uses-graph">
+            <div class="ability-uses-diamond" {{#if editable}}data-action="markUsage"{{/if}}>
+               {{~#each usesGraph.diamonds~}}
+                  <span>{{{ifThen (eq this "full") "&#9670;" "&#9671;"}}}</span>
+               {{~/each~}}
+            </div>
+            {{#if usesGraph.extra}}
+               <span class="ability-uses-extra">+{{usesGraph.extra}}</span>
+            {{/if}}
+            {{#if usesGraph.showTotal}}
+               <span class="ability-uses-total">/ {{system.uses.max}}</span>
+            {{/if}}
+            {{#if editable}}
+               <button type="button" class="icon genesys-app-action fa-solid fa-arrow-rotate-left ability-uses-refresh" data-action="resetUses" />
+            {{/if}}
+         </div>
+      {{/if}}
+   {{/if}}
+</section>

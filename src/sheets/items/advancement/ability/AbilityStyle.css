@@ -1,0 +1,90 @@
+.genesys.sheet {
+   &.application:not(&.minimizing, &.maximizing, &.minimized) {
+      min-width: 536px;
+      min-height: 400px;
+   }
+
+   .ability-main {
+      display: flex;
+      gap: var(--genesys-element-gap);
+      padding: 0 8px;
+
+      .ability-activation {
+         display: flex;
+         flex-direction: row;
+         gap: var(--genesys-element-gap);
+         height: 30px;
+         line-height: 30px;
+         width: 60%;
+         align-items: center;
+         font-family: var(--genesys-font-primary);
+
+         .caption {
+            font-family: var(--genesys-font-secondary);
+            font-size: 18px;
+         }
+
+         select {
+            margin-left: 0;
+            text-indent: 0;
+         }
+      }
+
+      .ability-uses-value, .ability-uses-max {
+         display: flex;
+         flex-direction: row;
+         gap: var(--genesys-element-gap);
+         height: 30px;
+         line-height: 30px;
+         width: 20%;
+         align-items: center;
+         font-family: var(--genesys-font-primary);
+
+         .caption {
+            font-family: var(--genesys-font-secondary);
+            font-size: 18px;
+         }
+      }
+
+      .ability-uses-max .caption {
+         font-size: 14px;
+         margin-right: 2px;
+      }
+
+      .ability-uses-graph {
+         display: flex;
+         width: 40%;
+         line-height: 30px;
+         font-size: 30px;
+         justify-content: end;
+         color: var(--genesys-color-blue-secondary);
+
+         .ability-uses-diamond > span {
+            display: inline-block;
+            transition: transform 0.5s ease;
+            &:hover {
+               transform: rotate(180deg);
+            }
+         }
+
+         .ability-uses-extra {
+            position: relative;
+            left: -4px;
+            bottom: -6px;
+            font-size: 12px;
+         }
+
+         .ability-uses-total {
+            font-family: var(--genesys-font-secondary);
+            font-size: 20px;
+            align-self: center;
+            white-space: nowrap;
+         }
+
+         .ability-uses-refresh {
+            margin-left: 8px;
+            align-self: center;
+         }
+      }
+   }
+}
