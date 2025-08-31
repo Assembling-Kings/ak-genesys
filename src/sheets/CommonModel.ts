@@ -8,10 +8,8 @@ export class CommonModel extends foundry.abstract.TypeDataModel implements Conte
       const enrichHTML = foundry.applications.ux.TextEditor.implementation.enrichHTML;
       for (const field of fields) {
          switch (field) {
-            case "source":
-               context.enrSource = await enrichHTML(this.source); break;
-            case "description":
-               context.enrDescription = await enrichHTML(this.description); break;
+            case "source": context.enrSource = await enrichHTML(this.source); break;
+            case "description": context.enrDescription = await enrichHTML(this.description); break;
             //No Default
          }
       }

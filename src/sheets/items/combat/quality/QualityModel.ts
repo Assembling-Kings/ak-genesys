@@ -1,8 +1,8 @@
-import { QualityActivation } from "@/values/Activation";
 import { CommonModel } from "@/sheets/CommonModel";
+import { $CONST } from "@/values/ValuesConst";
 
 export class QualityModel extends CommonModel {
-   declare activation: EnumValue<typeof QualityActivation>;
+   declare activation: EnumValue<typeof $CONST.QualityActivation>;
    declare rated: boolean;
 
    static override defineSchema(): foundry.abstract.types.DataSchema {
@@ -10,8 +10,8 @@ export class QualityModel extends CommonModel {
       return {
          ...super.defineSchema(),
          activation: new StringField({
-            initial: QualityActivation.Passive,
-            choices: Object.values(QualityActivation),
+            initial: $CONST.QualityActivation.Passive,
+            choices: Object.values($CONST.QualityActivation),
             blank: false,
             nullable: false,
             trim: true,

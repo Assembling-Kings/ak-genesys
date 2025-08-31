@@ -1,12 +1,12 @@
-import { RangeBand } from "@/values/RangeBand";
 import { GearModel } from "@/sheets/items/inventory/gear/GearModel";
 import { constructRefsByNameField, type RefsByNameField } from "@/helpers/model-helpers";
+import { $CONST } from "@/values/ValuesConst";
 
 export class BaseWeaponModel extends GearModel {
    declare damage: number;
    declare critical: number;
    declare skill: Nullable<{ name: string; img: string }>;
-   declare range: EnumValue<typeof RangeBand>;
+   declare range: EnumValue<typeof $CONST.RangeBand>;
    declare qualities: RefsByNameField<{ rating: number }>;
 
    static override defineSchema(): foundry.abstract.types.DataSchema {
@@ -42,8 +42,8 @@ export class BaseWeaponModel extends GearModel {
             nullable: true,
          }),
          range: new StringField({
-            initial: RangeBand.Engaged,
-            choices: Object.values(RangeBand),
+            initial: $CONST.RangeBand.Engaged,
+            choices: Object.values($CONST.RangeBand),
             blank: false,
             nullable: false,
             trim: true,

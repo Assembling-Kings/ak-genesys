@@ -1,32 +1,29 @@
 import { CommonModel } from "@/sheets/CommonModel";
-import { Characteristic } from "@/values/Characteristic";
+import { $CONST } from "@/values/ValuesConst";
 
 export class ArchetypeModel extends CommonModel {
-   declare characteristics: Record<EnumValue<typeof Characteristic>, number>;
+   declare characteristics: Record<EnumValue<typeof $CONST.Characteristic>, number>;
    declare wounds: number;
    declare strain: number;
    declare xp: number;
 
    static override defineSchema(): foundry.abstract.types.DataSchema {
       const { SchemaField, NumberField } = foundry.data.fields;
-      const newCharacteristicField = () => {
-         return new NumberField({
-            initial: 2,
-            integer: true,
-            min: 1,
-            nullable: false,
-         });
-      };
 
       return {
          ...super.defineSchema(),
          characteristics: new SchemaField(
             Object.fromEntries(
-               Object.values(Characteristic).map((characteristic) => [characteristic, newCharacteristicField()]),
-            ),
-            {
-               nullable: false,
-            },
+               Object.values($CONST.Characteristic).map((characteristic) => [
+                  characteristic,
+                  new NumberField({
+                     initial: 2,
+                     integer: true,
+                     min: 1,
+                     nullable: false,
+                  }),
+            ])),
+            { nullable: false },
          ),
          wounds: new NumberField({
             initial: 0,

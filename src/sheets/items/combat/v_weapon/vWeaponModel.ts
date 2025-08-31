@@ -1,27 +1,24 @@
 import { BaseWeaponModel } from "@/sheets/items/combat/BaseWeaponModel";
-import { FiringArcDirection } from "@/values/FiringArcDirection";
+import { $CONST } from "@/values/ValuesConst";
 
 export class vWeaponModel extends BaseWeaponModel {
-   declare firingArc: Record<EnumValue<typeof FiringArcDirection>, boolean>;
+   declare firingArc: Record<EnumValue<typeof $CONST.FiringArcDirection>, boolean>;
 
    static override defineSchema(): foundry.abstract.types.DataSchema {
       const { BooleanField, SchemaField } = foundry.data.fields;
-      const newFiringArcField = () => {
-         return new BooleanField({
-            initial: false,
-            nullable: false,
-         });
-      };
 
       return {
          ...super.defineSchema(),
          firingArc: new SchemaField(
             Object.fromEntries(
-               Object.values(FiringArcDirection).map((direction) => [direction, newFiringArcField()]),
-            ),
-            {
-               nullable: false,
-            },
+               Object.values($CONST.FiringArcDirection).map((direction) => [
+                  direction,
+                  new BooleanField({
+                     initial: false,
+                     nullable: false,
+                  }),
+            ])),
+            { nullable: false },
          ),
       };
    }

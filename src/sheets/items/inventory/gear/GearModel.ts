@@ -1,5 +1,5 @@
-import { GearDamageState } from "@/values/StatusEffect";
 import { CommonModel } from "@/sheets/CommonModel";
+import { $CONST } from "@/values/ValuesConst";
 
 export class GearModel extends CommonModel {
    declare rarity: number;
@@ -7,7 +7,7 @@ export class GearModel extends CommonModel {
    declare encumbrance: number;
 
    // Embedded-relevant properties.
-   declare condition: EnumValue<typeof GearDamageState>;
+   declare condition: EnumValue<typeof $CONST.GearDamageState>;
 
    static override defineSchema(): foundry.abstract.types.DataSchema {
       const { NumberField, StringField } = foundry.data.fields;
@@ -33,8 +33,8 @@ export class GearModel extends CommonModel {
             nullable: false,
          }),
          condition: new StringField({
-            initial: GearDamageState.Undamaged,
-            choices: Object.values(GearDamageState),
+            initial: $CONST.GearDamageState.Undamaged,
+            choices: Object.values($CONST.GearDamageState),
             blank: false,
             nullable: false,
             trim: true,

@@ -1,8 +1,8 @@
 import { CommonModel } from "@/sheets/CommonModel";
-import { Characteristic } from "@/values/Characteristic";
+import { $CONST } from "@/values/ValuesConst";
 
 export class SkillModel extends CommonModel {
-   declare characteristic: EnumValue<typeof Characteristic>;
+   declare characteristic: EnumValue<typeof $CONST.Characteristic>;
    declare category: string;
 
    // Embedded-relevant properties.
@@ -14,8 +14,8 @@ export class SkillModel extends CommonModel {
       return {
          ...super.defineSchema(),
          characteristic: new StringField({
-            initial: Characteristic.Brawn,
-            choices: Object.values(Characteristic),
+            initial: $CONST.Characteristic.Brawn,
+            choices: Object.values($CONST.Characteristic),
             blank: false,
             nullable: false,
             trim: true,

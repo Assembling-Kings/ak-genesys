@@ -1,4 +1,6 @@
 import "@/Genesys";
+import { isSimpleObject } from "@/helpers/checkers";
+import { $CONST } from "@/values/ValuesConst";
 
 // Pattern that matches the filename part of a path.
 const pathEndPattern = /\/\w+\.ts/i;
@@ -13,7 +15,7 @@ const pathEndPattern = /\/\w+\.ts/i;
 globalThis.$ak_tplts = (...relativePaths: string[]) => {
    // Try to find the current file path by grabbing it from a fake error stack.
    const stackTrace = (new Error()).stack ?? "";
-   const splittedStackTrace = stackTrace.split("/systems/ak-genesys/src/");
+   const splittedStackTrace = stackTrace.split(`/systems/${$CONST.SYSTEM.id}/src/`);
 
    if (splittedStackTrace.length < 2) {
       throw new Error("Unable to find the file path by ways of parsing an Error stack.");
@@ -33,7 +35,7 @@ globalThis.$ak_tplts = (...relativePaths: string[]) => {
       }
 
       const finalPath = [
-         "systems/ak-genesys/tplt",
+         `systems/${$CONST.SYSTEM.id}/tplt`,
          ...splittedPotentialPath.slice(
             0, relativePathTrueStart > 0 ? -relativePathTrueStart : splittedPotentialPath.length),
          ...splittedRelativePath.slice(relativePathTrueStart),
@@ -64,22 +66,13 @@ if (import.meta.hot) {
       }
    });
 
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-   function isValidJson(entity: any) {
-      if (typeof entity !== "object" || entity === null) {
-         return false;
-      }
-      const objPrototype = Object.getPrototypeOf(entity);
-      return objPrototype === null || objPrototype === Object.prototype;
-   }
-
    // Adds support for HMR of translation (.json) files.
    function updateLangFactory(paths: string[]) {
       return async () => {
          const relevantFile = paths.find((path) => path.endsWith(`/${game.i18n.lang}.json`));
          if (!relevantFile) { return; }
          const langObj = await foundry.utils.fetchJsonWithTimeout(relevantFile);
-         if (!isValidJson(langObj)) { return; }
+         if (!isSimpleObject(langObj)) { return; }
          foundry.utils.mergeObject(game.i18n.translations, langObj);
       };
    }
