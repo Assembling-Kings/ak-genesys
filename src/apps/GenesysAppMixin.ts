@@ -1,4 +1,5 @@
 import { type ApplicationFormConfiguration, type ApplicationConfiguration } from "@client/applications/_types.mjs";
+import { HandlebarsRenderOptions, HandlebarsTemplatePart } from "@client/applications/api/handlebars-application.mjs";
 import { type ImagePopoutConfiguration } from "@client/applications/apps/image-popout.mjs";
 
 type AppV2Type = typeof foundry.applications.api.ApplicationV2;
@@ -24,12 +25,28 @@ export function GenesysAppMixin<App extends AppV2Constructor = AppV2Type>(BaseAp
          },
       };
 
+      protected override _configureRenderParts(options: HandlebarsRenderOptions) {
+         const parts = super._configureRenderParts(options);
+         const finalParts: Array<[string, HandlebarsTemplatePart & { order?: number }]> = [];
+
+         Object.entries(parts).forEach((part: typeof finalParts[number]) => {
+            if (part[1].order !== undefined) {
+               finalParts.splice(part[1].order, 0, part);
+               delete part[1].order;
+            } else {
+               finalParts.push(part);
+            }
+         });
+         return Object.fromEntries(finalParts);
+      }
+
       /**
       * Allows the user to open a "prose-mirror" element by simply clicking on it.
       * @param _event The originating click event.
       * @param target The capturing HTML element which defined a `data-action`.
       */
-      static #openEditor(_event: PointerEvent, target: HTMLElement & { open: boolean }) {
+      static #openEditor(event: PointerEvent, target: HTMLElement & { open: boolean }) {
+         if (event.detail > 1) { return; }
          target.open = true;
       }
 
@@ -38,7 +55,8 @@ export function GenesysAppMixin<App extends AppV2Constructor = AppV2Type>(BaseAp
        * @param _event The originating click event.
        * @param target The capturing HTML element which defined a `data-action`.
        */
-      static #showImage(_event: PointerEvent, target: HTMLImageElement) {
+      static #showImage(event: PointerEvent, target: HTMLImageElement) {
+         if (event.detail > 1) { return; }
          new foundry.applications.apps.ImagePopout({
             src: target.src,
             uuid: target.dataset.docUuid,

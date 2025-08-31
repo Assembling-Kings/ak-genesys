@@ -1,5 +1,5 @@
 <section class="skill-header">
-   {{>"systems/ak-genesys/tplt/sheets/CommonView[header].hbs"}}
+   <div class="skill-sub-header truncate-text">{{>"systems/ak-genesys/tplt/sheets/CommonView[header].hbs"}}</div>
    {{#if mode.edit}}
       <select name="system.characteristic">
          {{#each systemFields.characteristic.choices}}

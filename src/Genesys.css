@@ -3,14 +3,44 @@
 @import url("apps/GenesysAppStyle.css") layer(system.main);
 @import url("sheets/CommonStyle.css") layer(system.main);
 @import url("sheets/items/advancement/skill/SkillStyle.css") layer(system.main);
+@import url("sheets/items/advancement/ability/AbilityStyle.css") layer(system.main);
+@import url("sheets/items/advancement/talent/TalentStyle.css") layer(system.main);
 
 @layer system.variables {
    :root {
-      --genesys-background-color: #f1ede8;
-      --genesys-dark-red: #90231e;
-      --genesys-blue: #2b4b73;
-      --genesys-dark-blue: #384455;
-      --genesys-orange: #efaf61;
+      --genesys-color-white-primary: #F1EDE8;
+      --genesys-color-white-secondary: #E7E3DE;
+
+      --genesys-color-blue-primary: #2B5C93;
+      --genesys-color-blue-secondary: #274071;
+      --genesys-color-blue-tertiary: #313E53;
+      --genesys-color-blue-quaternary: #DFF4FC;
+
+      --genesys-color-red-primary: #912424;
+
+      --genesys-color-orange-primary: #F68313;
+      --genesys-color-orange-secondary: #EFAF61;
+      
+      --genesys-color-black-primary: #231F20;
+      --genesys-color-black-secondary: #444141;
+      --genesys-color-black-tertiary: #B1AFB0;
+
+      --genesys-color-dice-boost: #80CEC4;
+      --genesys-color-dice-ability: #45AD48;
+      --genesys-color-dice-proficiency: #FDE600;
+      --genesys-color-dice-setback: #231F20;
+      --genesys-color-dice-difficulty: #552C7F;
+      --genesys-color-dice-challenge: #771214;
+      --genesys-color-power-combat: #C93227;
+      --genesys-color-power-social: #145282;
+      --genesys-color-power-general: #00773B;
+
+      --genesys-font-primary: 'Roboto Slab', serif;
+      --genesys-font-secondary: 'Bebas Neue', sans-serif;
+      --genesys-font-tertiary: 'Modesto Condensed', sans-serif;
+      --genesys-font-quaternary: 'Roboto Serif', serif;
+
+      --genesys-element-gap: 8px;
    }
 }
 
@@ -22,6 +52,9 @@
          border-radius: 0;
          padding: 0;
          margin: 0;
+         -moz-appearance: none;
+         -webkit-appearance: none;
+         appearance: none;
 
          &:focus {
             border: none;
@@ -29,24 +62,99 @@
             box-shadow: none;
          }
       }
+
+      input[type="number"] {
+         -moz-appearance: textfield;
+         -webkit-appearance: textfield;
+         appearance: textfield;
+      }
+
+      select {
+         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Ctitle%3Edown-arrow%3C%2Ftitle%3E%3Cg%20fill%3D%22%23000000%22%3E%3Cpath%20d%3D%22M10.293%2C3.293%2C6%2C7.586%2C1.707%2C3.293A1%2C1%2C0%2C0%2C0%2C.293%2C4.707l5%2C5a1%2C1%2C0%2C0%2C0%2C1.414%2C0l5-5a1%2C1%2C0%2C1%2C0-1.414-1.414Z%22%20fill%3D%22%23000000%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+         background-repeat: no-repeat;
+         background-size: 10px;
+         background-position: right 5px center;
+      }
    }
 }
 
 @layer system.base {
-   .genesys {
-      img.edit-image {
-         cursor: pointer;
+   :root {
+      --genesys-shadow-input: color-mix(in srgb, var(--genesys-color-black-tertiary) 50%, transparent);
+   }
 
+   .genesys {
+      .truncate-text:not(:has(input)) {
+         white-space: nowrap;
+         overflow: hidden;
+         text-overflow: ellipsis;
+      }
+
+      [data-action] {
+         cursor: pointer;
+      }
+
+      img.edit-image {
          &:hover {
-            outline: 2px solid var(--genesys-dark-blue);
+            outline: 2px solid var(--genesys-color-blue-secondary);
          }
       }
 
       input, select {
-         --input-text-color: black;
+         --input-text-color: var(--genesys-color-black-primary);
+         --input-placeholder-color: var(--genesys-color-black-secondary);
+         --input-background-color: var(--genesys-shadow-input);
+
+         padding: 0 5px;
+         font-family: var(--genesys-font-primary);
          
          &:focus, &:hover {
-            outline: 2px solid var(--genesys-dark-blue);
+            outline: 2px solid var(--genesys-color-blue-secondary);
+         }
+      }
+
+      input[type="text"] {
+         text-overflow: ellipsis;
+      }
+
+      input[type="checkbox"] {
+         --checkbox-checked-color: var(--genesys-color-white-secondary);
+         --checkbox-checkmark-color: var(--genesys-color-black-primary);
+         --checkbox-background-color: var(--genesys-color-black-secondary);
+
+         &:focus, &:hover {
+            outline: none;
+            transform: scale(1.2);
+         }
+      }
+
+      select {
+         padding: 0 0 0 5px;
+         box-shadow: inset 0 0 6px var(--genesys-shadow-input);
+      }
+
+      .gap-for-input:has(:is(input, select)) {
+         --genesys-element-gap: 3px;
+      }
+
+      button[type="button"].icon.genesys-app-action, document-tags > button.icon {
+         padding: 0;
+         flex-basis: auto;
+         font-size: 10px;
+         color: var(--genesys-color-red-primary);
+         background-color: transparent;
+         border-width: 0;
+         box-shadow: inset 0 0 0 1px var(--genesys-color-black-primary);
+         border-radius: 24px;
+
+         &:hover {
+            color: var(--genesys-color-white-primary);
+            background-color: var(--genesys-color-red-primary);
+            box-shadow: none;
+         }
+
+         &:focus {
+            outline: 1px solid var(--genesys-color-black-primary);
          }
       }
 
@@ -62,10 +170,91 @@
          &.edit-content {
             &.inactive .editor-content {
                cursor: pointer;
+               box-shadow: inset 0 0 6px var(--genesys-shadow-input);
             }
 
             &.active, &:hover {
-               outline: 2px solid var(--genesys-dark-blue);
+               outline: 2px solid var(--genesys-color-blue-secondary);
+            }
+         }
+      }
+
+      document-tags {
+         &[single] {
+            &:has(> div.tags:not(:empty)) > :not(div.tags) {
+               display: none;
+            }
+         }
+
+         .tag {
+            border: 2px solid var(--genesys-color-black-tertiary);
+            color: var(--genesys-color-blue-primary);
+            font-size: 14px;
+            font-weight: bold;
+
+            a.remove {
+               color: var(--genesys-color-black-secondary);
+            }
+         }
+
+         & > button.icon {
+            font-size: 12px;
+         }
+      }
+
+      reference-holder {
+         display: flex;
+         flex-direction: column;
+         width: 100%;
+         height: 32px;
+
+         div.message-area {
+            width: 100%;
+            border: 1px dashed black;
+            border-radius: 4px;
+            text-align: center;
+            padding: 5px;
+            font-style: italic;
+            font-family: var(--genesys-font-quaternary);
+            color: var(--genesys-color-black-primary);
+
+            &.concealed {
+               display: none;
+            }
+         }
+
+         div.references-area {
+            & > div {
+               display: flex;
+               width: fit-content;
+               border: 2px solid var(--genesys-color-black-tertiary);
+               border-radius: 6px;
+               align-items: center;
+               padding: 3px;
+               color: var(--genesys-color-blue-primary);
+
+               img {
+                  height: 20px;
+               }
+
+               span {
+                  max-width: 210px;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  font-weight: bold;
+                  padding: 0 4px;
+               }
+
+               a {
+                  color: var(--genesys-color-black-secondary);
+                  border-left: 1px solid var(--genesys-color-black-tertiary);
+                  padding-left: 3px;
+
+                  &:hover {
+                     text-shadow: 0 0 8px var(--genesys-color-blue-primary);
+                  }
+               }
             }
          }
       }

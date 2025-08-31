@@ -1,12 +1,13 @@
-<header class="sheet-header">
+<header class="sheet-header gap-for-input">
    <img src="{{document.img}}" alt="{{document.name}}" title="{{document.name}}" data-edit="img"
       data-action="{{ifThen mode.edit "editImage" "showImage"}}" data-doc-uuid="{{document.uuid}}"
       class="entity-img {{#if mode.edit}}edit-image{{/if}}" />
-   <div class="document-name">
+   <div class="document-name truncate-text">
       {{#if mode.edit}}
          <input type="text" name="name" value="{{document.name}}" placeholder="{{localize "Name"}}" />
       {{else}}
          {{ifThen displayName displayName document.name}}
       {{/if}}
+      <hr {{#if mode.edit}}class="edit-name"{{/if}} />
    </div>
 </header>

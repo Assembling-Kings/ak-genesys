@@ -9,42 +9,49 @@
       flex-direction: row;
       align-items: center;
 
+      .skill-sub-header{
+         width: 100%;
+      }
+
       select {
-         --input-text-color: var(--genesys-blue);
+         --input-text-color: var(--genesys-color-blue-primary);
          width: auto;
          margin: 8px 8px 8px 0;
-         padding-left: 8px;
-         border: 1px solid black;
-         border-radius: 4px;
-         font-family: 'Modesto Condensed', sans-serif;
-
-         &:focus, &:hover {
-            border: 1px solid transparent;
-            border-radius: 0;
-         }
+         font-family: var(--genesys-font-tertiary);
+         font-size: 20px;
       }
 
       .skill-rank {
-         position: relative;
-         width: 56px;
-         height: fit-content;
+         --gtemp-rank-color: var(--genesys-color-white-primary);
+         display: flex;
+         border-radius: 25px;
+         font-size: 30px;
+         height: 40px;
+         width: 40px;
+         margin: auto 8px auto 0;
          flex-shrink: 0;
-         z-index: 0;
+         justify-content: center;
+         align-items: center;
+         position: relative;
+
+         &:not(:has(> i)) {
+            --gtemp-rank-color: var(--genesys-color-black-primary);
+            border: 3px dotted var(--genesys-color-red-primary);
+         }
 
          i {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: var(--genesys-dark-red);
-            font-size: 52px;
-            z-index: -1;
-         }
-         div {
-            font-size: 42px;
-            color: var(--genesys-background-color);
-            text-align: center;
+            color: var(--genesys-color-red-primary);
+            font-size: 40px;
             z-index: 0;
+         }
+
+         div {
+            color: var(--gtemp-rank-color);
+            z-index: 1;
          }
       }
    }
@@ -52,33 +59,25 @@
    .skill-main {
       display: flex;
       flex-direction: column;
-      padding: 8px;
-      gap: 8px;
-      height: 100%;
-      flex-shrink: 1;
+      padding: 0 8px;
 
-      label.skill-category {
+      .skill-category {
          display: flex;
          flex-direction: row;
-         gap: 8px;
-         align-items: center;
+         gap: var(--genesys-element-gap);
          height: 30px;
          line-height: 30px;
+         align-items: center;
+         font-family: var(--genesys-font-primary);
 
          .caption {
-            font-family: 'Bebas Neue', sans-serif;
-            font-weight: 500;
+            font-family: var(--genesys-font-secondary);
             font-size: 18px;
          }
 
          input {
-            --input-text-color: black;
+            width: 100%;
          }
-      }
-
-      .skill-description {
-         height: 100%;
-         flex-grow: 1;
       }
    }
 }

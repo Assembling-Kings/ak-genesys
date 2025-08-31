@@ -2,44 +2,63 @@
    .sheet-header {
       display: flex;
       padding: 8px;
-      gap: 8px;
+      gap: var(--genesys-element-gap);
       align-items: center;
       width: 100%;
 
       .entity-img {
          height: 40px;
-         border: 1px solid var(--genesys-orange);
-         background-color: rgba(239, 175, 97, 0.5);
+         border: 1px solid var(--genesys-color-orange-secondary);
+         background-color: color-mix(in srgb, var(--genesys-color-orange-secondary), transparent);
          border-radius: 8px;
       }
 
       .document-name {
          width: 100%;
-         font-family: 'Modesto Condensed', sans-serif;
+         font-family: var(--genesys-font-tertiary);
          font-size: 32px;
-         color: var(--genesys-blue);
-         border-bottom: 2px solid var(--genesys-dark-blue);
-         
+         color: var(--genesys-color-blue-primary);
 
          input {
+            --input-text-color: var(--genesys-color-blue-primary);
             width: 100%;
-            --input-text-color: var(--genesys-dark-blue);
+            font-family: var(--genesys-font-tertiary);
+         }
 
-            &:focus {
-               font-family: 'Modesto Condensed', sans-serif;
+         hr {
+            height: 2px;
+            margin: 0;
+            background-color: var(--genesys-color-blue-secondary);
+            background-image: none;
+
+            &.edit-name {
+               margin-left: 5px;
             }
          }
+      }
+   }
+
+   .sheet-description {
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      height: 100%;
+      flex-shrink: 1;
+
+      prose-mirror {
+         height: 100%;
+         flex-grow: 1;
       }
    }
 
    .sheet-source {
       margin: auto 8px 3px;
       padding: 0 15px;
-      border-top: 1px dashed black;
-      font-family: 'Roboto Serif', serif;
+      border-top: 1px dashed var(--genesys-color-black-primary);
+      font-family: var(--genesys-font-quaternary);
       font-size: 13px;
       font-style: italic;
-      color: black;
+      color: var(--genesys-color-black-primary);
 
       &:has(> input) {
          height: 36px;
@@ -48,22 +67,30 @@
 
          input {
             width: 100%;
-            text-overflow: ellipsis;
             text-align: right;
-            padding: 0 5px;
+            font-family: var(--genesys-font-quaternary);
          }
       }
 
-      &:has(> div) {
+      &:has(> div:not(:empty)) {
          height: 26px;
          line-height: 26px;
 
          & > div {
-            white-space: preserve-spaces;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            /* If an inline element is present in the text Firefox will consider it a whitespace break. If there is
+             * more text after the element then the text is considered to be in the next line. This means that the
+             * ellipsis won't show up which incorrectly signals that there is no more text to show. This can be fixed
+             * by setting `white-space: preserve-spaces;` but then Chrome stops showing the ellipsis. Setting the
+             * display of the container as `block ruby` fixes the issue and maintains consistency between browsers.
+             */
+            /* eslint-disable-next-line css/use-baseline */
+            display: block ruby;
             text-align: right;
          }
+      }
+
+      &:has(> div:empty) {
+         display: none;
       }
    }
 }

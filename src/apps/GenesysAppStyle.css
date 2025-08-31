@@ -1,41 +1,42 @@
 .application.genesys {
-   --color-text-primary: black;
+   --color-text-primary: var(--genesys-color-black-primary);
 
    /* Some applications have minimums set so this ensures that they can be minimized. */
    &.minimizing, &.maximizing, &.minimized {
-      background-color: var(--genesys-background-color);
+      background-color: var(--genesys-color-white-primary);
+      background-image: none;
       min-width: 0;
       min-height: 0;
    }
 
    .window-header {
-      --color-header-background: var(--genesys-background-color);
-      --color-light-1: var(--genesys-dark-red);
+      --color-header-background: var(--genesys-color-white-primary);
+      --color-light-1: var(--genesys-color-red-primary);
       font-weight: bold;
 
       button.header-control {
-         --button-hover-text-color: var(--genesys-background-color);
-         --button-hover-background-color: var(--genesys-dark-red);
-         --button-hover-border-color: var(--genesys-dark-red);
-         --button-focus-outline-color: var(--genesys-dark-red);
+         --button-hover-text-color: var(--genesys-color-white-primary);
+         --button-hover-background-color: var(--genesys-color-red-primary);
+         --button-hover-border-color: var(--genesys-color-red-primary);
+         --button-focus-outline-color: var(--genesys-color-red-primary);
       }
    }
 
    /* Sets the background pattern. */
    .window-content {
       padding: 0;
-      background-color: var(--genesys-background-color);
+      background-color: var(--genesys-color-white-primary);
       background-position: calc(-64px / 3) -16px;
       background-size: 64px 128px;
       background-repeat: repeat;
-      --bg-img-vertical:
-         transparent 0%, transparent 50%, #e7e3de calc(50% - 1px),
-         #e7e3de calc(50% + 1px), transparent calc(50% + 1px);
+      --gtemp-bg-img-vertical:
+         transparent 0%, transparent 50%, var(--genesys-color-white-secondary) calc(50% - 1px),
+         var(--genesys-color-white-secondary) calc(50% + 1px), transparent calc(50% + 1px);
       background-image:
-         linear-gradient(to right, #e7e3de 0px, transparent 2px),
-         linear-gradient(to bottom, #e7e3de 0px, transparent 2px,
-            transparent 50%, #e7e3de 50%, transparent calc(50% + 2px)),
-         linear-gradient(to bottom right, var(--bg-img-vertical)),
-         linear-gradient(to top right, var(--bg-img-vertical));
+         linear-gradient(to right, var(--genesys-color-white-secondary) 0px, transparent 2px),
+         linear-gradient(to bottom, var(--genesys-color-white-secondary) 0px, transparent 2px,
+            transparent 50%, var(--genesys-color-white-secondary) 50%, transparent calc(50% + 2px)),
+         linear-gradient(to bottom right, var(--gtemp-bg-img-vertical)),
+         linear-gradient(to top right, var(--gtemp-bg-img-vertical));
    }
 }

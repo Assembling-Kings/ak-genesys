@@ -1,0 +1,12 @@
+<section class="sheet-description">
+   <prose-mirror
+      name="system.description" value="{{system.description}}"
+      toggled
+      {{#if mode.edit}}
+         data-action="openEditor"
+         class="edit-content"
+      {{/if}}
+   >
+      {{{enrDescription}}}
+   </prose-mirror>
+</section>
