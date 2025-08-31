@@ -1,0 +1,71 @@
+.genesys.sheet.talent-app {
+   &.application:not(&.minimizing, &.maximizing, &.minimized) {
+      min-width: 536px;
+      min-height: 435px;
+   }
+
+   .talent-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .talent-sub-header {
+         width: 100%;
+      }
+
+      .talent-rank {
+         display: flex;
+         border: 3px dotted var(--genesys-color-red-primary);
+         border-radius: 25px;
+         font-size: 30px;
+         height: 40px;
+         width: 40px;
+         margin: auto 8px auto 0;
+         flex-shrink: 0;
+         justify-content: center;
+         align-items: center;
+      }
+
+      .talent-ranked {
+         display: flex;
+         flex-direction: column;
+         padding-right: 8px;
+         justify-content: center;
+         align-items: center;
+
+         .caption {
+            font-family: var(--genesys-font-secondary);
+            font-size: 18px;
+         }
+      }
+   }
+
+   .talent-extra {
+      display: flex;
+      gap: var(--genesys-element-gap);
+      padding: 0 8px 8px 8px;
+      justify-content: space-between;
+
+      .talent-tier, .talent-requirement {
+         display: flex;
+         flex-direction: row;
+         gap: var(--genesys-element-gap);
+         align-items: center;
+         font-family: var(--genesys-font-primary);
+
+         .caption {
+            font-family: var(--genesys-font-secondary);
+            font-size: 18px;
+         }
+      }
+
+      .talent-tier {
+         width: 80px;
+         font-size: 16px;
+      }
+
+      .talent-requirement {
+         width: 100%;
+      }
+   }
+}

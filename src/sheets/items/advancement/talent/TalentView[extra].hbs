@@ -1,0 +1,24 @@
+<section class="talent-extra">
+   <label class="talent-requirement">
+      <span class="caption">{{localize "GENESYS.sheets.talent.requirement"}}:</span>
+      <reference-holder
+         name="system.requirement" value="{{asString system.requirement}}"
+         types="{{getChoices system.schema "requirement.type"}}" max="1"
+         drop-placeholder="Drop a talent or ability here..."
+         empty-placeholder="None"
+         {{#if (not mode.edit)}}readonly{{/if}}
+      />
+   </label>
+   <label class="talent-tier gap-for-input">
+      <span class="caption">{{localize "GENESYS.sheets.talent.tier"}}:</span>
+      {{#if mode.edit}}
+         <select name="system.tier">
+            {{#each tierOptions}}
+               <option value="{{this}}" {{#if (eq this @root.system.tier)}}selected{{/if}}>{{this}}</option>
+            {{/each}}
+         </select>
+      {{else}}
+         <span>{{system.tier}}</span>
+      {{/if}}
+   </label>
+</section>

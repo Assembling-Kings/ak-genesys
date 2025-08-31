@@ -10,6 +10,7 @@ export class SkillSheet extends GenesysItemSheet<SkillModel> {
          width: 536,
          height: 400,
       },
+      classes: ["skill-app"],
    };
 
    static PARTS = {

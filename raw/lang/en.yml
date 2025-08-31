@@ -34,6 +34,11 @@ TYPES:
     v_injury: Critical Hit
     v_weapon: Vehicle Weapon
 
+ELEMENTS:
+  REFERENCE_HOLDER:
+    drop: Drop reference here...
+    empty: No references
+    remove: Remove reference
 
 GENESYS:
   stat:

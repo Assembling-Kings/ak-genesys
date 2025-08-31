@@ -1,4 +1,4 @@
-.genesys.sheet {
+.genesys.sheet.skill-app {
    &.application:not(&.minimizing, &.maximizing, &.minimized) {
       min-width: 536px;
       min-height: 400px;

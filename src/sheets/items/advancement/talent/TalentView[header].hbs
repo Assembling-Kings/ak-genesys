@@ -1,0 +1,15 @@
+<section class="talent-header">
+   <div class="talent-sub-header truncate-text">{{>"systems/ak-genesys/tplt/sheets/CommonView[header].hbs"}}</div>
+   {{#if mode.edit}}
+      {{!-- Don't show this section if the talent is embedded --}}
+      <label class="talent-ranked">
+         <span class="caption">{{localize "GENESYS.sheets.talent.ranked"}}:</span>
+         <input type="checkbox" name="system.rank" {{#if system.rank}}checked{{/if}} />
+      </label>
+   {{else}}
+      {{!-- Show this only if embedded, show something different if non-embedded --}}
+      {{#if system.rank}}
+         <div class="talent-rank">{{system.rank}}</div>
+      {{/if}}
+   {{/if}}
+</section>

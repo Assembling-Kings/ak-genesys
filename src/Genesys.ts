@@ -1,4 +1,6 @@
 import "@/Genesys.css";
+import { ReferenceHolderElement } from "@/elements/ReferenceHolderElement";
+import { asString, getChoices } from "@/helpers/handlebars";
 import { GenesysItem } from "@/sheets/items/GenesysItem";
 import { AbilityModel } from "@/sheets/items/advancement/ability/AbilityModel";
 import { AbilitySheet } from "@/sheets/items/advancement/ability/AbilitySheet";
@@ -28,6 +30,13 @@ import { ContainerModel } from "@/sheets/items/inventory/container/ContainerMode
 import { ContainerSheet } from "@/sheets/items/inventory/container/ContainerSheet";
 import { GearModel } from "@/sheets/items/inventory/gear/GearModel";
 import { GearSheet } from "@/sheets/items/inventory/gear/GearSheet";
+import { $CONST } from "@/values/ValuesConst";
+
+[
+   ReferenceHolderElement,
+].forEach((element) => {
+   window.customElements.define(element.tagName, element);
+});
 
 Hooks.once("init", () => {
    CONFIG.Item.documentClass = GenesysItem;
@@ -96,8 +105,15 @@ Hooks.once("init", () => {
       CONFIG.fontDefinitions[fontName] = {
          editor: true,
          fonts: fonts.map(([fontFile, style = "normal", weight = "400"]) => ({
-            urls: [`systems/ak-genesys/font/${fontFile}`], style, weight,
+            urls: [`systems/${$CONST.SYSTEM.id}/font/${fontFile}`], style, weight,
          })),
       };
+   });
+
+   Object.entries({
+      asString,
+      getChoices,
+   }).forEach(([funcName, funcHelper]) => {
+      Handlebars.registerHelper(funcName, funcHelper);
    });
 });

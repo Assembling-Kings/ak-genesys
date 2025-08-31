@@ -1,10 +1,13 @@
 import { type AppConfiguration, type AppV2Constructor, GenesysAppMixin } from "@/apps/GenesysAppMixin";
+import { $CONST } from "@/values/ValuesConst";
 import { type HandlebarsRenderOptions } from "@client/applications/api/handlebars-application.mjs";
+import FormDataExtended from "@client/applications/ux/form-data-extended.mjs";
 
 type DocV2Type = Omit<
    typeof foundry.applications.api.DocumentSheetV2, "DEFAULT_OPTIONS"
 > & AppV2Constructor & { DEFAULT_OPTIONS?: AppConfiguration };
 type DocumentWithModel = foundry.abstract.Document & { system: foundry.abstract.TypeDataModel };
+
 type SheetMode = "view" | "edit";
 
 /**
@@ -17,10 +20,19 @@ export function GenesysSheetMixin<Doc extends DocV2Type = DocV2Type>(BaseSheet: 
          form: {
             submitOnChange: true,
          },
+         actions: {
+            toggleMode: this.#toggleMode,
+         },
       };
+
+      static #MODE_ICON_MAP: Record<SheetMode, string> = Object.freeze({
+         view: "fa-lock",
+         edit: "fa-lock-open",
+      });
 
       declare document: DocumentWithModel;
       declare isEditable: boolean;
+
       /**
        * This variable holds the current mode of the sheet. Typically users have access of the sheet in `view` mode and
        * require owner privilages to toogle the sheet to `edit` mode.
@@ -83,22 +95,12 @@ export function GenesysSheetMixin<Doc extends DocV2Type = DocV2Type>(BaseSheet: 
       protected override async _renderFrame(options: HandlebarsRenderOptions) {
          const frame = await super._renderFrame(options);
          if (this.#canSetMode("edit")) {
-            const modeIconMap: Record<SheetMode, string> = {
-               view: "fa-lock",
-               edit: "fa-lock-open",
-            };
-
             // Adds a button to toggle the sheet's mode.
             const button = document.createElement("button");
             button.type = "button";
-            button.classList.add(...["header-control", "icon", "fa-solid", "fa-fw", modeIconMap[this.getMode()]]);
-            button.addEventListener("click", () => {
-               if (this.setMode(this.getMode() === "edit" ? "view" : "edit")) {
-                  Object.values(modeIconMap).forEach((iconClass) => button.classList.toggle(iconClass));
-               }
-               this.render();
-            });
-
+            button.dataset.action = "toggleMode";
+            button.classList.add(
+               ...["header-control", "icon", "fa-solid", "fa-fw", GenesysSheet.#MODE_ICON_MAP[this.getMode()]]);
             this.window.controls.before(button);
          }
          return frame;
@@ -107,6 +109,45 @@ export function GenesysSheetMixin<Doc extends DocV2Type = DocV2Type>(BaseSheet: 
       protected override _onClose(_options: HandlebarsRenderOptions) {
          // Reset the mode to `view` for the next time we render the sheet.
          this.setMode("view");
+      }
+
+      /**
+       * Method in charge of expanding the form data with potentially additional modifications.
+       * @param event The event that triggered the form submission.
+       * @param form The assoaciated HTMLFormElement.
+       * @param formData Processed form data that hasn't been expanded yet.
+       * @returns An expanded object of processed form data.
+       * @override Replaces the method defined by the foundry.applications.api.DocumentSheetV2 base class.
+       */
+      protected _processFormData(event: Nullable<SubmitEvent>, form: HTMLFormElement, formData: FormDataExtended & { object: object }) {
+         const pathsToTransmute: string[] = [];
+         for (const [elementName, elementValue] of Object.entries(formData.object)) {
+            if (foundry.utils.getType(elementValue) === "Map" && (elementValue as Map<Symbol, unknown>).has($CONST.SYSTEM.marker)) {
+               pathsToTransmute.push(elementName);
+            }
+         }
+
+         const expandedData = foundry.utils.expandObject(formData.object);
+         for (const pathToTransmute of pathsToTransmute) {
+            const transmutable: Map<Symbol, unknown> = foundry.utils.getProperty(expandedData, pathToTransmute);
+            transmutable.delete($CONST.SYSTEM.marker);
+            foundry.utils.setProperty(expandedData, pathToTransmute, Object.fromEntries(transmutable));
+         }
+
+         return expandedData;
+      }
+
+      /**
+       * Method to toogle the sheet mode and update the icon on the window frame.
+       * @param _event The originating click event.
+       * @param target The capturing HTML element which defined a `data-action`.
+       */
+      static #toggleMode(this: GenesysSheet, event: PointerEvent, target: HTMLElement) {
+         if (event.detail > 1) { return; }
+         if (this.setMode(this.getMode() === "edit" ? "view" : "edit")) {
+            Object.values(GenesysSheet.#MODE_ICON_MAP).forEach((iconClass) => target.classList.toggle(iconClass));
+         }
+         this.render();
       }
    };
 }

@@ -15,6 +15,7 @@ export class AbilitySheet<Model extends AbilityModel = AbilityModel> extends Gen
          markUsage: { handler: this.#markUsage, buttons: [0, 2] },
          resetUses: this.#resetUses,
       },
+      classes: ["ability-app"],
    };
 
    static PARTS = {
