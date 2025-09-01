@@ -1,4 +1,4 @@
-import { GenesysItemSheet } from "@/sheets/items/GenesysItemSheet";
+import { GenesysItemCommonSheet } from "@/sheets/items/GenesysItemCommonSheet";
 import { type WeaponModel } from "@/sheets/items/combat/weapon/WeaponModel";
 
-export class WeaponSheet extends GenesysItemSheet<WeaponModel> { }
+export class WeaponSheet extends GenesysItemCommonSheet<WeaponModel> { }

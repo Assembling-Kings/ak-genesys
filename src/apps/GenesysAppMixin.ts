@@ -1,5 +1,8 @@
 import { type ApplicationFormConfiguration, type ApplicationConfiguration } from "@client/applications/_types.mjs";
-import { HandlebarsRenderOptions, HandlebarsTemplatePart } from "@client/applications/api/handlebars-application.mjs";
+import {
+   type HandlebarsRenderOptions,
+   type HandlebarsTemplatePart,
+} from "@client/applications/api/handlebars-application.mjs";
 import { type ImagePopoutConfiguration } from "@client/applications/apps/image-popout.mjs";
 
 type AppV2Type = typeof foundry.applications.api.ApplicationV2;

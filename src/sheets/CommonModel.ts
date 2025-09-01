@@ -1,7 +1,13 @@
 import { type AppRenderContext, type ContextProvider } from "@/types/Providers";
 
 export class CommonModel extends foundry.abstract.TypeDataModel implements ContextProvider {
+   /**
+    * A text note that describes the origin of the real world data used for the document.
+    */
    declare source: string;
+   /**
+    * This field is used to hold the textual information and/or description of a document.
+    */
    declare description: string;
 
    async prepareContextForFields(context: AppRenderContext, fields: string[]) {

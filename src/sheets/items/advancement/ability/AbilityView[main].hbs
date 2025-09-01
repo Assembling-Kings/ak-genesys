@@ -3,7 +3,7 @@
       <span class="caption">{{localize "GENESYS.sheets.ability.activation"}}:</span>
       {{#if mode.edit}}
          <select name="system.activation">
-            {{#each systemFields.activation.choices}}
+            {{#each (getChoices system.schema "activation")}}
                <option value="{{this}}" {{#if (eq this @root.system.activation)}}selected{{/if}}>
                   {{localize (concat "GENESYS.values.abilityActivation." this)}}
                </option>
@@ -25,7 +25,7 @@
    {{else}}
       {{#if usesGraph}}
          <div class="ability-uses-graph">
-            <div class="ability-uses-diamond" {{#if editable}}data-action="markUsage"{{/if}}>
+            <div class="ability-uses-diamond" {{#if editable}}data-action="spendUses"{{/if}}>
                {{~#each usesGraph.diamonds~}}
                   <span>{{{ifThen (eq this "full") "&#9670;" "&#9671;"}}}</span>
                {{~/each~}}

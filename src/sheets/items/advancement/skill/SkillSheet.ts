@@ -1,26 +1,22 @@
 import { type AppConfiguration } from "@/apps/GenesysAppMixin";
-import { GenesysItemSheet } from "@/sheets/items/GenesysItemSheet";
+import { GenesysItemCommonSheet } from "@/sheets/items/GenesysItemCommonSheet";
 import { type SkillModel } from "@/sheets/items/advancement/skill/SkillModel";
 import { type ApplicationRenderContext } from "@client/applications/_types.mjs";
 import { type HandlebarsRenderOptions } from "@client/applications/api/handlebars-application.mjs";
 
-export class SkillSheet extends GenesysItemSheet<SkillModel> {
+export class SkillSheet extends GenesysItemCommonSheet<SkillModel> {
    static DEFAULT_OPTIONS: AppConfiguration = {
-      position: {
-         width: 536,
-         height: 400,
-      },
+      position: { width: 536, height: 400 },
       classes: ["skill-app"],
    };
 
    static PARTS = {
+      ...GenesysItemCommonSheet.PARTS,
       header: {
          get template() { return $ak_tplt("SkillView[header]"); },
          get templates() { return $ak_tplts("../../../CommonView[header]"); },
       },
-      main: { get template() { return $ak_tplt("SkillView[main]"); } },
-      description: { get template() { return $ak_tplt("../../../CommonView[description]"); } },
-      source: { get template() { return $ak_tplt("../../../CommonView[source]"); } },
+      main: { order: 1, get template() { return $ak_tplt("SkillView[main]"); } },
    };
 
    protected override async _preparePartContext(
@@ -34,8 +30,6 @@ export class SkillSheet extends GenesysItemSheet<SkillModel> {
             theContext.displayName = `${this.document.name} (${charLabel})`;
             return theContext;
          }
-         case "description": return await this.document.system.prepareContextForFields(theContext, ["description"]);
-         case "source": return await this.document.system.prepareContextForFields(theContext, ["source"]);
          default: return theContext;
       }
    }

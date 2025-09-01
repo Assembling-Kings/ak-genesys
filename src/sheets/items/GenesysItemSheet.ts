@@ -19,7 +19,7 @@ export class GenesysItemSheet<
 }
 
 type PrepareSubmitDataFunc = foundry.applications.sheets.ItemSheetV2["_prepareSubmitData"];
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging -- Mixin typing propagation
 export interface GenesysItemSheet {
    _prepareSubmitData(...p: Parameters<PrepareSubmitDataFunc>): ReturnType<PrepareSubmitDataFunc>;
 }

@@ -1,7 +1,7 @@
 import { type AppConfiguration, type AppV2Constructor, GenesysAppMixin } from "@/apps/GenesysAppMixin";
 import { $CONST } from "@/values/ValuesConst";
 import { type HandlebarsRenderOptions } from "@client/applications/api/handlebars-application.mjs";
-import FormDataExtended from "@client/applications/ux/form-data-extended.mjs";
+import type FormDataExtended from "@client/applications/ux/form-data-extended.mjs";
 
 type DocV2Type = Omit<
    typeof foundry.applications.api.DocumentSheetV2, "DEFAULT_OPTIONS"
@@ -25,6 +25,9 @@ export function GenesysSheetMixin<Doc extends DocV2Type = DocV2Type>(BaseSheet: 
          },
       };
 
+      /**
+       * A map of each sheet's mode to the relevant classes for the toggle icon.
+       */
       static #MODE_ICON_MAP: Record<SheetMode, string> = Object.freeze({
          view: "fa-lock",
          edit: "fa-lock-open",
@@ -85,9 +88,9 @@ export function GenesysSheetMixin<Doc extends DocV2Type = DocV2Type>(BaseSheet: 
             view: this.#mode === "view",
          };
 
+         // Quick access to the DataModel and the sheet's mode.
          return Object.assign(context, {
             system: this.document.system,
-            systemFields: this.document.system.schema.fields,
             mode: modeMap,
          });
       }
@@ -117,19 +120,25 @@ export function GenesysSheetMixin<Doc extends DocV2Type = DocV2Type>(BaseSheet: 
        * @param form The assoaciated HTMLFormElement.
        * @param formData Processed form data that hasn't been expanded yet.
        * @returns An expanded object of processed form data.
-       * @override Replaces the method defined by the foundry.applications.api.DocumentSheetV2 base class.
+       * @override Replaces the method defined by the `foundry.applications.api.DocumentSheetV2` base class.
        */
-      protected _processFormData(event: Nullable<SubmitEvent>, form: HTMLFormElement, formData: FormDataExtended & { object: object }) {
+      protected _processFormData(
+         _event: Nullable<SubmitEvent>, _form: HTMLFormElement, formData: FormDataExtended & { object: object },
+      ) {
          const pathsToTransmute: string[] = [];
+         // Get all the paths that point to a Map object that has the system's marker.
          for (const [elementName, elementValue] of Object.entries(formData.object)) {
-            if (foundry.utils.getType(elementValue) === "Map" && (elementValue as Map<Symbol, unknown>).has($CONST.SYSTEM.marker)) {
+            if (foundry.utils.getType(elementValue) === "Map"
+               && (elementValue as Map<symbol, unknown>).has($CONST.SYSTEM.marker)) {
                pathsToTransmute.push(elementName);
             }
          }
 
          const expandedData = foundry.utils.expandObject(formData.object);
+         // FVTT's `expandObject` utility doesn't touch complex data types like Map so we take advantage of that to
+         // transform the output of all the previously captured paths to be a proper Objects.
          for (const pathToTransmute of pathsToTransmute) {
-            const transmutable: Map<Symbol, unknown> = foundry.utils.getProperty(expandedData, pathToTransmute);
+            const transmutable: Map<symbol, unknown> = foundry.utils.getProperty(expandedData, pathToTransmute);
             transmutable.delete($CONST.SYSTEM.marker);
             foundry.utils.setProperty(expandedData, pathToTransmute, Object.fromEntries(transmutable));
          }

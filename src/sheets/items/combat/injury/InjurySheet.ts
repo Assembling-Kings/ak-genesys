@@ -1,4 +1,4 @@
-import { GenesysItemSheet } from "@/sheets/items/GenesysItemSheet";
+import { GenesysItemCommonSheet } from "@/sheets/items/GenesysItemCommonSheet";
 import { type InjuryModel } from "@/sheets/items/combat/injury/InjuryModel";
 
-export class InjurySheet extends GenesysItemSheet<InjuryModel> { }
+export class InjurySheet extends GenesysItemCommonSheet<InjuryModel> { }
