@@ -2,7 +2,7 @@
    <div class="skill-sub-header truncate-text">{{>"systems/ak-genesys/tplt/sheets/CommonView[header].hbs"}}</div>
    {{#if mode.edit}}
       <select name="system.characteristic">
-         {{#each systemFields.characteristic.choices}}
+         {{#each (getChoices system.schema "characteristic")}}
             <option value="{{this}}" {{#if (eq this @root.system.characteristic)}}selected{{/if}}>
                {{localize (concat "GENESYS.values.characteristic." this ".label")}}
             </option>

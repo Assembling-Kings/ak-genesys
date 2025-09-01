@@ -17,7 +17,7 @@ export class vWeaponModel extends BaseWeaponModel {
                      initial: false,
                      nullable: false,
                   }),
-            ])),
+               ])),
             { nullable: false },
          ),
       };

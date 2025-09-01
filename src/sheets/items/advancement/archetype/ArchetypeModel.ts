@@ -22,7 +22,7 @@ export class ArchetypeModel extends CommonModel {
                      min: 1,
                      nullable: false,
                   }),
-            ])),
+               ])),
             { nullable: false },
          ),
          wounds: new NumberField({

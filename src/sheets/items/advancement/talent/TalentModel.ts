@@ -1,12 +1,21 @@
-import { constructRefByNameField, RefByNameField } from "@/helpers/model-helpers";
+import { constructRefByNameField, type RefByNameField } from "@/helpers/model-helpers";
 import { AbilityModel } from "@/sheets/items/advancement/ability/AbilityModel";
-import { AppRenderContext } from "@/types/Providers";
+import { type AppRenderContext } from "@/types/Providers";
 
 export class TalentModel extends AbilityModel {
+   /**
+    * The talent's tier value.
+    */
    declare tier: number;
+   /**
+    * A friendly way to show that a talent has another talent or ability as a requirement.
+    */
    declare requirement: RefByNameField<{ type: "ability" | "talent" }>;
 
-   // Embedded-relevant properties.
+   /**
+    * This value serves both as an indication that the talent is ranked (if the value is at least 1), and as the
+    * actor's current rank value for the talent.
+    */
    declare rank: number;
 
    override async prepareContextForFields(context: AppRenderContext, fields: string[]) {

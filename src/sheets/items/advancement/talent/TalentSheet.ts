@@ -1,8 +1,8 @@
 import { AbilitySheet } from "@/sheets/items/advancement/ability/AbilitySheet";
 import { type TalentModel } from "@/sheets/items/advancement/talent/TalentModel";
-import { DragTransferData } from "@/types/DragData";
-import { ApplicationRenderContext } from "@client/applications/_types.mjs";
-import { HandlebarsRenderOptions } from "@client/applications/api/handlebars-application.mjs";
+import { type DragTransferData } from "@/types/DragData";
+import { type ApplicationRenderContext } from "@client/applications/_types.mjs";
+import { type HandlebarsRenderOptions } from "@client/applications/api/handlebars-application.mjs";
 
 export class TalentSheet extends AbilitySheet<TalentModel> {
    static DEFAULT_OPTIONS = {
@@ -22,7 +22,9 @@ export class TalentSheet extends AbilitySheet<TalentModel> {
       extra: { order: 1, get template() { return $ak_tplt("TalentView[extra]"); } },
    };
 
-   protected override async _preparePartContext(partId: string, context: ApplicationRenderContext, options: HandlebarsRenderOptions) {
+   protected override async _preparePartContext(
+      partId: string, context: ApplicationRenderContext, options: HandlebarsRenderOptions,
+   ) {
       const theContext = await super._preparePartContext(partId, context, options);
       switch (partId) {
          case "extra": return await this.document.system.prepareContextForFields(theContext, ["tier"]);
@@ -32,7 +34,9 @@ export class TalentSheet extends AbilitySheet<TalentModel> {
 
    protected override async _onRender(_context: ApplicationRenderContext, _options: HandlebarsRenderOptions) {
       this.element.querySelector('[name="system.requirement"]')?.addEventListener("drop", (event: DragEvent) => {
-         const dropData: Partial<DragTransferData> = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+         const dropData: Partial<DragTransferData>
+            = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+         // Prevent the talent to include itself as a requirement..
          if (dropData.uuid === this.document.uuid) {
             event.preventDefault();
             event.stopPropagation();

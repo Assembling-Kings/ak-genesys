@@ -32,6 +32,9 @@ import { GearModel } from "@/sheets/items/inventory/gear/GearModel";
 import { GearSheet } from "@/sheets/items/inventory/gear/GearSheet";
 import { $CONST } from "@/values/ValuesConst";
 
+/**
+ * Register custom elements.
+ */
 [
    ReferenceHolderElement,
 ].forEach((element) => {
@@ -39,6 +42,9 @@ import { $CONST } from "@/values/ValuesConst";
 });
 
 Hooks.once("init", () => {
+   /**
+    * Register Document classes and Data Models for all of the system's types.
+    */
    CONFIG.Item.documentClass = GenesysItem;
    CONFIG.Item.dataModels = {
       ability: AbilityModel,
@@ -60,9 +66,12 @@ Hooks.once("init", () => {
       v_weapon: vWeaponModel,
    };
 
-   //// Also add a way to "remember" the last one picked.
+   // TODO: Add a way to "remember" what was the last type created.
    // CONFIG.Item.defaultType = "myType";
 
+   /**
+    * Register Sheets for all of the system's types.
+    */
    const { Items } = foundry.documents.collections;
    Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
    Object.entries({
@@ -91,6 +100,9 @@ Hooks.once("init", () => {
       });
    });
 
+   /**
+    * Register additional fonts used by the system.
+    */
    Object.entries({
       ["Bebas Neue"]: [["BebasNeue-Regular.ttf"]],
       ["Genesys Glyphs"]: [["GenesysGlyphsAndDice.woff2"]],
@@ -110,6 +122,9 @@ Hooks.once("init", () => {
       };
    });
 
+   /**
+    * Register additional Handlebars helpers.
+    */
    Object.entries({
       asString,
       getChoices,

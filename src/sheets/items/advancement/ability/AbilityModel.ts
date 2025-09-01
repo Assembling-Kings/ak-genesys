@@ -4,9 +4,21 @@ import { type GenesysItem } from "@/sheets/items/GenesysItem";
 import { $CONST } from "@/values/ValuesConst";
 
 export class AbilityModel extends CommonModel {
+   /**
+    * Represents how the ability can be activated.
+    */
    declare activation: EnumValue<typeof $CONST.AbilityActivation>;
+   /**
+    * A friendly tracker of how many times the ability has, and can, be used.
+    */
    declare uses: ResourceField;
 
+   /**
+    * Spend, or restore, a number of uses of the ability.
+    * @param amount An integer that represents how many times we should use the ability. Negative numbers instead
+    *        restore uses.
+    * @returns `true` if we updated the current amount of ability uses.
+    */
    async spendUses(amount: number) {
       if (this.uses.max && amount !== 0) {
          const newCurrentUses = this.uses.value - Math.round(amount);
@@ -18,6 +30,10 @@ export class AbilityModel extends CommonModel {
       return false;
    }
 
+   /**
+    * Reset the number of times the ability can be used.
+    * @returns `true` if we updated the current amount of ability uses.
+    */
    async resetUses() {
       if (this.uses.max > 0 && this.uses.value < this.uses.max) {
          await (this.parent as GenesysItem<this>).update({ "system.uses.value": this.uses.max });

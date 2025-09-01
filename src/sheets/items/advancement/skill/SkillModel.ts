@@ -2,11 +2,22 @@ import { CommonModel } from "@/sheets/CommonModel";
 import { $CONST } from "@/values/ValuesConst";
 
 export class SkillModel extends CommonModel {
+   /**
+    * The characteristic that is most relevant for the skill.
+    */
    declare characteristic: EnumValue<typeof $CONST.Characteristic>;
+   /**
+    * The category the skill is part of.
+    */
    declare category: string;
 
-   // Embedded-relevant properties.
+   /**
+    * An actor's rank on the skill.
+    */
    declare rank: number;
+   /**
+    * A list of UUIDs to other documents on the same actor that make this a career skill.
+    */
    declare career: string[];
 
    static override defineSchema(): foundry.abstract.types.DataSchema {

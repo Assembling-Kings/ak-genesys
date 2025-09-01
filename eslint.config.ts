@@ -1,16 +1,24 @@
+import { globalIgnores } from "eslint/config";
 import pluginJs from "@eslint/js";
 import pluginTs from "typescript-eslint";
 import pluginStylistic from "@stylistic/eslint-plugin";
 import pluginCss from "@eslint/css";
 import pluginYml from "eslint-plugin-yml";
+import pluginHtml from "@html-eslint/eslint-plugin";
+import parserHtml, { TEMPLATE_ENGINE_SYNTAX } from "@html-eslint/parser";
 import globals from "globals";
 
 export default pluginTs.config(
-   { linterOptions: {
-      reportUnusedInlineConfigs: "error",
-      reportUnusedDisableDirectives: "error",
-   } },
-   { ignores: ["node_modules/", "dist/", "foundry/", "static/"] },
+   {
+      linterOptions: {
+         reportUnusedInlineConfigs: "error",
+         reportUnusedDisableDirectives: "error",
+      },
+      languageOptions: {
+         globals: globals.browser,
+      },
+   },
+   globalIgnores(["dist/", "foundry/", "static/"]),
    { files: ["**/*.{js,ts}"], ...pluginJs.configs.recommended },
    pluginTs.configs.recommended,
    {
@@ -56,15 +64,18 @@ export default pluginTs.config(
       },
    },
    {
-      files: ["src/*.{js,ts}"],
+      ...pluginHtml.configs["flat/recommended"],
+      files: ["**/*.hbs"],
+      plugins: { "@html-eslint": pluginHtml },
       languageOptions: {
-         globals: globals.browser,
+         parser: parserHtml,
+         parserOptions: {
+            templateEngineSyntax: TEMPLATE_ENGINE_SYNTAX.HANDLEBAR,
+         },
       },
-   },
-   {
-      files: ["vite.config.ts", "eslint.config.ts", "dev/*.{js,ts}"],
-      languageOptions: {
-         globals: { ...globals.node, ...globals.browser },
+      rules: {
+         // Disabled for now since it ignores handlebars expressions for the purpose of indenting it's children.
+         "@html-eslint/indent": "off",
       },
    },
    {

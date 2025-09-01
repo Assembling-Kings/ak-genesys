@@ -8,9 +8,11 @@ en:
       maneuver: Active (Maneuver)
       incidental: Active (Incidental)
       outOfTurn: Active (Incidental, Out of Turn)
+
     qualityActivation:
       passive: Passive
       active: Active
+
     characteristic:
       brawn:
         label: Brawn
@@ -30,11 +32,13 @@ en:
       presence:
         label: Presence
         abbreviation: Pr
+
     firingArcDirection:
       fore: Fore
       aft: Aft
       port: Port
       starboard: Starboard
+
     rangeBand:
       engaged: Engaged
       short: Short
@@ -42,6 +46,7 @@ en:
       long: Long
       extreme: Extreme
       strategic: Strategic
+
     gearDamageState:
       undamaged: Undamaged
       minor: Minor
