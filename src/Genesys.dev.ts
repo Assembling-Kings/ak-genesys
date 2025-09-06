@@ -50,6 +50,13 @@ globalThis.$ak_tplt = (relativePath: string) => {
    return globalThis.$ak_tplts(relativePath)[0];
 };
 
+globalThis.$ak_tpltIn = (
+   [docSheet, partId]: [ReturnType<typeof foundry.applications.api.HandlebarsApplicationMixin>, string],
+   ...otherTplt: string[]
+) => {
+   return [docSheet.PARTS[partId].template, ...(docSheet.PARTS[partId].templates ?? []), ...otherTplt];
+};
+
 if (import.meta.hot) {
    // Adds support for HMR of template (.hbs) files.
    function updateTemplateFactory(path: string) {

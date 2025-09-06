@@ -42,6 +42,7 @@ export default pluginTs.config(
             code: 120,
             ignoreComments: true,
             ignoreUrls: true,
+            ignoreRegExpLiterals: true,
          }],
          "@stylistic/max-statements-per-line": "off",
          "@stylistic/multiline-ternary": ["error", "always-multiline"],

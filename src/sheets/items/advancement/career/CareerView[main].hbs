@@ -1,0 +1,10 @@
+<section class="career-main">
+   <span class="title">{{localize "GENESYS.sheets.career.skills"}}</span>
+   <reference-holder
+      name="system.skills" value="{{asString system.skills}}"
+      types="skill"
+      drop-placeholder="{{localize "GENESYS.sheets.career.refDropPlaceholder"}}"
+      empty-placeholder="{{localize "GENESYS.sheets.career.refEmptyPlaceholder"}}"
+      {{#if (not mode.edit)}}readonly{{/if}}
+   />
+</section>

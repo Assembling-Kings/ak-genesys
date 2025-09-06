@@ -1,7 +1,7 @@
 .genesys.sheet.ability-app {
    &.application:not(&.minimizing, &.maximizing, &.minimized) {
       min-width: 536px;
-      min-height: 400px;
+      min-height: 374px;
    }
 
    .ability-main {
@@ -13,8 +13,8 @@
          display: flex;
          flex-direction: row;
          gap: var(--genesys-element-gap);
-         height: 30px;
-         line-height: 30px;
+         height: var(--genesys-element-height);
+         line-height: var(--genesys-element-height);
          width: 60%;
          align-items: center;
          font-family: var(--genesys-font-primary);
@@ -34,8 +34,8 @@
          display: flex;
          flex-direction: row;
          gap: var(--genesys-element-gap);
-         height: 30px;
-         line-height: 30px;
+         height: var(--genesys-element-height);
+         line-height: var(--genesys-element-height);
          width: 20%;
          align-items: center;
          font-family: var(--genesys-font-primary);
@@ -54,7 +54,7 @@
       .ability-uses-graph {
          display: flex;
          width: 40%;
-         line-height: 30px;
+         line-height: var(--genesys-element-height);
          font-size: 30px;
          justify-content: end;
          color: var(--genesys-color-blue-secondary);

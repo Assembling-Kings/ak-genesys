@@ -1,7 +1,7 @@
 .genesys.sheet.talent-app {
    &.application:not(&.minimizing, &.maximizing, &.minimized) {
       min-width: 536px;
-      min-height: 435px;
+      min-height: 406px;
    }
 
    .talent-header {
@@ -52,6 +52,7 @@
          gap: var(--genesys-element-gap);
          align-items: center;
          font-family: var(--genesys-font-primary);
+         height: var(--genesys-element-height);
 
          .caption {
             font-family: var(--genesys-font-secondary);

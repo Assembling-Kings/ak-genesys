@@ -23,12 +23,12 @@ languages:
     name: English
     path: lang/en.json
 
-url: https://github.com/Assembling-Kings/fvtt-genesys
-bugs: https://github.com/Assembling-Kings/fvtt-genesys/issues
-changelog: https://github.com/Assembling-Kings/fvtt-genesys/blob/release/CHANGELOG.md
-license: https://github.com/Assembling-Kings/fvtt-genesys/blob/main/LICENSE
-manifest: https://github.com/Assembling-Kings/fvtt-genesys/releases/latest/download/manifest.json
-download: https://github.com/Assembling-Kings/fvtt-genesys/releases/latest/download/genesys.zip
+url: https://github.com/Assembling-Kings/ak-genesys
+bugs: https://github.com/Assembling-Kings/ak-genesys/issues
+changelog: https://github.com/Assembling-Kings/ak-genesys/blob/release/CHANGELOG.md
+license: https://github.com/Assembling-Kings/ak-genesys/blob/main/LICENSE
+manifest: https://github.com/Assembling-Kings/ak-genesys/releases/latest/download/manifest.json
+download: https://github.com/Assembling-Kings/ak-genesys/releases/latest/download/genesys.zip
 
 documentTypes:
   Item:

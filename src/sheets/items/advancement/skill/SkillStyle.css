@@ -1,7 +1,7 @@
 .genesys.sheet.skill-app {
    &.application:not(&.minimizing, &.maximizing, &.minimized) {
       min-width: 536px;
-      min-height: 400px;
+      min-height: 374px;
    }
 
    .skill-header {
@@ -65,8 +65,8 @@
          display: flex;
          flex-direction: row;
          gap: var(--genesys-element-gap);
-         height: 30px;
-         line-height: 30px;
+         height: var(--genesys-element-height);
+         line-height: var(--genesys-element-height);
          align-items: center;
          font-family: var(--genesys-font-primary);
 

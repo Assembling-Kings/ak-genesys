@@ -3,3 +3,5 @@ en:
     ranked: Ranked
     tier: Tier
     requirement: Requirement
+    refDropPlaceholder: Drop a talent or ability here...
+    refEmptyPlaceholder: None

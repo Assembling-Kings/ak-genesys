@@ -1,0 +1,30 @@
+.genesys.sheet.career-app {
+   &.application:not(&.minimizing, &.maximizing, &.minimized) {
+      min-width: 536px;
+      min-height: 522px;
+   }
+
+   .sheet-description {
+      padding-top: 0px;
+   }
+
+   .career-main {
+      display: flex;
+      flex-direction: column;
+      padding: 0 8px 8px 8px;
+      height: fit-content;
+
+      .title {
+         font-family: var(--genesys-font-secondary);
+         font-size: 26px;
+      }
+
+      reference-holder {
+         max-height: 140px;
+
+         .references-area {
+            overflow-y: auto;
+         }
+      }
+   }
+}

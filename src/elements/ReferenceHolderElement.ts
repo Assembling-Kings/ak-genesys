@@ -342,7 +342,7 @@ export class ReferenceHolderElement extends foundry.applications.elements.Abstra
          if (isSimpleObject(refDetails)) {
             refName = refName.trim();
             if (refName) {
-               const [refImg, refType] = ReferenceHolderElement.#extractReferenceDetails(referenceEntity, theTypes);
+               const [refImg, refType] = ReferenceHolderElement.#extractReferenceDetails(refDetails, theTypes);
                if (refImg && refType) {
                   cleanReferences[refName] = { img: refImg, type: refType };
                   hasReference = true;

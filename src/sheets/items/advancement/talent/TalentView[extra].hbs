@@ -4,8 +4,8 @@
       <reference-holder
          name="system.requirement" value="{{asString system.requirement}}"
          types="{{getChoices system.schema "requirement.type"}}" max="1"
-         drop-placeholder="Drop a talent or ability here..."
-         empty-placeholder="None"
+         drop-placeholder="{{localize "GENESYS.sheets.talent.refDropPlaceholder"}}"
+         empty-placeholder="{{localize "GENESYS.sheets.talent.refEmptyPlaceholder"}}"
          {{#if (not mode.edit)}}readonly{{/if}}
       />
    </label>

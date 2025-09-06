@@ -6,7 +6,7 @@ import { type HandlebarsRenderOptions } from "@client/applications/api/handlebar
 
 export class SkillSheet extends GenesysItemCommonSheet<SkillModel> {
    static DEFAULT_OPTIONS: AppConfiguration = {
-      position: { width: 536, height: 400 },
+      position: { width: 536, height: 374 },
       classes: ["skill-app"],
    };
 
@@ -14,7 +14,7 @@ export class SkillSheet extends GenesysItemCommonSheet<SkillModel> {
       ...GenesysItemCommonSheet.PARTS,
       header: {
          get template() { return $ak_tplt("SkillView[header]"); },
-         get templates() { return $ak_tplts("../../../CommonView[header]"); },
+         get templates() { return $ak_tpltIn([GenesysItemCommonSheet, "header"]); },
       },
       main: { order: 1, get template() { return $ak_tplt("SkillView[main]"); } },
    };

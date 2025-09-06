@@ -5,6 +5,7 @@
 @import url("sheets/items/advancement/skill/SkillStyle.css") layer(system.main);
 @import url("sheets/items/advancement/ability/AbilityStyle.css") layer(system.main);
 @import url("sheets/items/advancement/talent/TalentStyle.css") layer(system.main);
+@import url("sheets/items/advancement/career/CareerStyle.css") layer(system.main);
 
 @layer system.variables {
    :root {
@@ -41,6 +42,7 @@
       --genesys-font-quaternary: 'Roboto Serif', serif;
 
       --genesys-element-gap: 8px;
+      --genesys-element-height: 24px;
       --genesys-element-input-shadow: color-mix(in srgb, var(--genesys-color-black-tertiary) 50%, transparent);
    }
 }
@@ -99,6 +101,7 @@
       }
 
       input, select {
+         --input-height: var(--genesys-element-height);
          --input-text-color: var(--genesys-color-black-primary);
          --input-placeholder-color: var(--genesys-color-black-secondary);
          --input-background-color: var(--genesys-element-input-shadow);
@@ -127,7 +130,7 @@
       }
 
       select {
-         padding: 0 0 0 5px;
+         padding: 0 15px 0 5px;
          box-shadow: inset 0 0 6px var(--genesys-element-input-shadow);
       }
 
@@ -143,7 +146,7 @@
          background-color: transparent;
          border-width: 0;
          box-shadow: inset 0 0 0 1px var(--genesys-color-black-primary);
-         border-radius: 24px;
+         border-radius: var(--genesys-element-height);
 
          &:hover {
             color: var(--genesys-color-white-primary);
@@ -205,15 +208,15 @@
       reference-holder {
          display: flex;
          flex-direction: column;
+         gap: var(--genesys-element-gap);
          width: 100%;
-         height: 32px;
 
          div.message-area {
             width: 100%;
             border: 1px dashed black;
             border-radius: 4px;
             text-align: center;
-            padding: 5px;
+            padding: 4px;
             font-style: italic;
             font-family: var(--genesys-font-quaternary);
             color: var(--genesys-color-black-primary);
@@ -224,6 +227,10 @@
          }
 
          div.references-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--genesys-element-gap);
+
             & > div {
                display: flex;
                width: fit-content;

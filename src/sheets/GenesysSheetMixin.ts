@@ -127,16 +127,24 @@ export function GenesysSheetMixin<Doc extends DocV2Type = DocV2Type>(BaseSheet: 
       ) {
          const pathsToTransmute: string[] = [];
          // Get all the paths that point to a Map object that has the system's marker.
-         for (const [elementName, elementValue] of Object.entries(formData.object)) {
-            if (foundry.utils.getType(elementValue) === "Map"
-               && (elementValue as Map<symbol, unknown>).has($CONST.SYSTEM.marker)) {
-               pathsToTransmute.push(elementName);
+         for (const [modelPath, formValue] of Object.entries(formData.object)) {
+            if (foundry.utils.getType(formValue) === "Map"
+               && (formValue as Map<symbol, unknown>).has($CONST.SYSTEM.marker)) {
+               const pathKeys = modelPath.split(".");
+               // Force a full replacement for the end key since the data we are receiving already has the desired
+               // structure for nested data fields.
+               pathKeys[pathKeys.length - 1] = `==${pathKeys[pathKeys.length - 1]}`;
+               const pathToTransmute = pathKeys.join(".");
+               pathsToTransmute.push(pathToTransmute);
+
+               delete formData.object[modelPath];
+               formData.object[pathToTransmute] = formValue;
             }
          }
 
          const expandedData = foundry.utils.expandObject(formData.object);
          // FVTT's `expandObject` utility doesn't touch complex data types like Map so we take advantage of that to
-         // transform the output of all the previously captured paths to be a proper Objects.
+         // transform the output of all the previously captured paths to be proper Objects.
          for (const pathToTransmute of pathsToTransmute) {
             const transmutable: Map<symbol, unknown> = foundry.utils.getProperty(expandedData, pathToTransmute);
             transmutable.delete($CONST.SYSTEM.marker);

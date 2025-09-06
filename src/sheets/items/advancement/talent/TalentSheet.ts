@@ -6,10 +6,7 @@ import { type HandlebarsRenderOptions } from "@client/applications/api/handlebar
 
 export class TalentSheet extends AbilitySheet<TalentModel> {
    static DEFAULT_OPTIONS = {
-      position: {
-         width: 536,
-         height: 435,
-      },
+      position: { width: 536, height: 406 },
       classes: ["talent-app"],
    };
 
@@ -17,7 +14,7 @@ export class TalentSheet extends AbilitySheet<TalentModel> {
       ...AbilitySheet.PARTS,
       header: {
          get template() { return $ak_tplt("TalentView[header]"); },
-         get templates() { return $ak_tplts("../../../CommonView[header]"); },
+         get templates() { return $ak_tpltIn([AbilitySheet, "header"]); },
       },
       extra: { order: 1, get template() { return $ak_tplt("TalentView[extra]"); } },
    };
@@ -36,7 +33,7 @@ export class TalentSheet extends AbilitySheet<TalentModel> {
       this.element.querySelector('[name="system.requirement"]')?.addEventListener("drop", (event: DragEvent) => {
          const dropData: Partial<DragTransferData>
             = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
-         // Prevent the talent to include itself as a requirement..
+         // Prevents the talent from including itself as a requirement.
          if (dropData.uuid === this.document.uuid) {
             event.preventDefault();
             event.stopPropagation();

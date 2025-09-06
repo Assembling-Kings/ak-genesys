@@ -20,6 +20,7 @@
          color: var(--genesys-color-blue-primary);
 
          input {
+            --input-height: 32px;
             --input-text-color: var(--genesys-color-blue-primary);
             width: 100%;
             font-family: var(--genesys-font-tertiary);
@@ -61,8 +62,8 @@
       color: var(--genesys-color-black-primary);
 
       &:has(> input) {
-         height: 36px;
-         line-height: 36px;
+         height: calc(var(--genesys-element-height) + 2px);
+         line-height: calc(var(--genesys-element-height) + 2px);
          padding: 0 10px;
 
          input {
@@ -73,8 +74,8 @@
       }
 
       &:has(> div:not(:empty)) {
-         height: 26px;
-         line-height: 26px;
+         height: calc(var(--genesys-element-height) + 2px);
+         line-height: calc(var(--genesys-element-height) + 2px);
 
          & > div {
             /* If an inline element is present in the text Firefox will consider it a whitespace break. If there is

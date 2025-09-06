@@ -14,4 +14,8 @@ declare global {
    // Helper functions used during development.
    function $ak_tplt(relativePath: string): string;
    function $ak_tplts(...relativePaths: string[]): string[];
+   function $ak_tpltIn(
+      sheetPart: [ReturnType<typeof foundry.applications.api.HandlebarsApplicationMixin>, string],
+      ...otherTplt: string[]
+   ): string[];
 }

@@ -7,15 +7,12 @@ import { type DeepPartial } from "@common/_types.mjs";
 
 export class AbilitySheet<Model extends AbilityModel = AbilityModel> extends GenesysItemCommonSheet<Model> {
    static DEFAULT_OPTIONS: AppConfiguration = {
-      position: {
-         width: 536,
-         height: 400,
-      },
+      position: { width: 536, height: 374 },
+      classes: ["ability-app"],
       actions: {
          spendUses: { handler: this.#spendUses, buttons: [0, 2] },
          resetUses: this.#resetUses,
       },
-      classes: ["ability-app"],
    };
 
    static PARTS = {

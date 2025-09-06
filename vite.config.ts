@@ -41,8 +41,7 @@ export default defineConfig({
       // Replaces getters that call the `$ak_tplt` & `$ak_tplts` helper functions with proper paths to the templates.
       replacePattern([{
          glob: "src/sheets/**/*.ts",
-         pattern:
-            /get\s+(templates?)\s*\(\s*\)\s*{\s*return\s+\$ak_tplts?\s*\(\s*((["'][\w./[\]]+["']\s*,?\s*)+)\);?\s*}/g,
+         pattern: /get\s+(templates?)\s*\(\s*\)\s*{\s*return\s+\$ak_tplts?\s*\(\s*(("[\w./[\]]+"\s*,?\s*)+)\);?\s*}/g,
          replace(patternMatch: string[], filePath: string) {
             const objKey = patternMatch[1];
             const tpltsList = patternMatch[2]
@@ -57,6 +56,29 @@ export default defineConfig({
                });
             const wrapperStrings = objKey.endsWith("s") ? ['["', '"]'] : ['"', '"'];
             return `${objKey}: ${wrapperStrings[0]}${tpltsList.join('",\n"')}${wrapperStrings[1]}`;
+         },
+      }]),
+
+      // Replaces getters that call the `$ak_tpltIn` helper function with proper paths to the inherited templates.
+      replacePattern([{
+         glob: "src/sheets/**/*.ts",
+         pattern: /get\s+templates\s*\(\s*\)\s*{\s*return\s+\$ak_tpltIn?\s*\(\s*\[\s*([^,\s]+)\s*,\s*("\w+")\s*]\s*(,\s*(("[\w./[\]]+"\s*,?\s*)+))?\);?\s*}/g,
+         replace(patternMatch: string[], filePath: string) {
+            const docSheet = patternMatch[1];
+            const partId = patternMatch[2];
+            const tpltsList = (patternMatch[4] as string | undefined)
+               ?.trim().split(",").map((tplt) => tplt.trim())
+               .filter((tplt) => !!tplt).map((tplt) => {
+                  const strippedPath = path.posix.join(
+                     "systems", SYSTEM_NAME, TEMPLATE_DIR,
+                     path.posix.relative(SOURCE_DIR, path.posix.dirname(filePath)),
+                     tplt.substring(1, tplt.length - 1) + ".hbs",
+                  );
+                  return strippedPath;
+               }) ?? [];
+            const sheetPart = `${docSheet}.PARTS[${partId}].template`;
+            const extraPartials = tpltsList.length ? `,\n"${tpltsList.join('",\n"')}"` : "";
+            return `templates: [${sheetPart},\n...(${sheetPart}s ?? [])${extraPartials}]`;
          },
       }]),
 
